@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  currentChoice: string = "";
+
+  setActive(choice: string): void{
+      this.currentChoice = choice;
+  }
+
+  getActive(choice: string) : string{
+      if(this.currentChoice == choice)
+           return "active";
+      else
+           return "not";
+  }
 }
