@@ -8,11 +8,13 @@
           </tr>
           </thead>
           <tbody>
-            <tr  *ngFor="let xx of COURSES">
+            <tr  *ngFor="let xx of LIST">
                 <td>{{xx}}</td>
             </tr>
           </tbody>
       </table>
   </div>
-  <div class="col-md-2"></div>
+  <div class="col-md-2">
+    <button (click)="atualizar()" class='.btn-default' type="button" class="btn btn-default">Atualizar</button>
+  </div>
 </div>

@@ -1,4 +1,6 @@
-let configuration = require('../configuration');
+declare var require: any;
+var configuration = require('../configuration');
+//import configuration  from '../configuration.json';
 
 import { Injectable, OnInit, Output, EventEmitter } from '@angular/core';
 import { Http, Response } from '@angular/http';
@@ -17,6 +19,7 @@ export class AppService implements OnInit {
     public API_VERSION:string = 'v1';
 
     public COURSE_LIST:any[];
+    public LIST:any[];
 
     listChange: Subject<any> = new Subject<any>();
 
@@ -30,7 +33,6 @@ export class AppService implements OnInit {
         console.log('google');
         gapi.locallib = this;
         gapi.load('client:auth2', this.initClient);
-
     }
     initClient(): void {
           console.log('initClient');
@@ -38,7 +40,7 @@ export class AppService implements OnInit {
             discoveryDocs: configuration.discoveryDocs,
             clientId: configuration.clientId,
             scope: configuration.scope
-          }).then(function () {
+          }).then( () => {
             console.log('initClient . then');
             gapi.auth2.getAuthInstance().isSignedIn.listen(gapi.locallib.updateSigninStatus);
             gapi.locallib.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
@@ -56,12 +58,8 @@ export class AppService implements OnInit {
     list(): void {
         gapi.client.classroom.courses.list({
           pageSize: 10
-        }).then(function(response) {
-          gapi.locallib.listChange.next(response.result.courses);
-        });
+        }).then(response => { console.log(response.result.courses);console.log(this.listChange); this.listChange.next(response.result.courses); });
     }
-
-
 
     //-------------- MOODLE -----------------------
     json(source: string, params:any): Observable<Response> {

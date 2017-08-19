@@ -1,0 +1,15 @@
+
+<!-- Term: <input type="text" #searchText (input)="search(searchText.value)">-->
+<BR/>
+<table class="table table-striped">
+    <thead>
+    <tr>
+      <td>Sala</td>
+    </tr>
+    </thead>
+    <tbody>
+      <tr  *ngFor="let gif of json">
+          <td>{{gif.name}}</td>
+      </tr>
+    </tbody>
+</table>
