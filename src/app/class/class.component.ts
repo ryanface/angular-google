@@ -1,32 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Response } from '@angular/http';
+import { Subscription } from 'rxjs/Subscription';
 import { AppService } from "../app.service";
+import { List } from '../list.type';
 
 @Component({
   selector: 'app-class',
   templateUrl: './class.component.html',
-  styleUrls: ['./class.component.css']
+  styleUrls: ['./class.component.css'],
 })
 export class ClassComponent implements OnInit {
 
-  COURSES: any[] = [];
-  LIST: any[] = ['11','22'];
+  LIST:Response;
+  msg:Response;
+
+  subscription: Subscription;
+  subscription1: Subscription;
 
   constructor( private AppService: AppService ) {
-     this.AppService.listChange.subscribe((list) => {  for(let i in list) this.COURSES.push(list[i].name); setTimeout(()=> { console.log('insta'); this.atualizar();},1000); });
   }
 
   ngOnInit() {
      this.AppService.google();
+     this.subscription = this.AppService.getService().subscribe((lista: Response) => this.LIST = lista);
 
-     //this.AppService.listChange.subscribe((response: Response) => {  console.info(response); this.COURSES = response.json(); });
-
+     this.subscription1 = this.AppService.pesquisarGiphy().subscribe((response: Response) => this.msg = response.json().data);
   }
   ngOnDestroy() {
-      //this.AppService.listChange.unsubscribe();
+      this.subscription.unsubscribe();
+      this.subscription1.unsubscribe();
   }
   atualizar(){
-      this.LIST = this.COURSES;
+    console.log('service:',this.LIST,this.msg );
   }
-
 }

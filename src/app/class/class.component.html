@@ -8,9 +8,16 @@
           </tr>
           </thead>
           <tbody>
-            <tr  *ngFor="let xx of LIST">
-                <td>{{xx}}</td>
-            </tr>
+              <a *ngFor="let gif of msg">
+                <img
+                  src="http://i.giphy.com/{{gif.id}}.gif" title="imagem {{gif.id}}">
+              </a>
+              <div *ngIf="LIST" class="alert alert-success">
+                  <tr  *ngFor="let gif of LIST">
+                      <td>{{gif.name}}</td>
+                  </tr>
+              </div>
+              <app-filter-list [json]="LIST"></app-filter-list>
           </tbody>
       </table>
   </div>
