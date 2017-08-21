@@ -4,12 +4,16 @@
 <table class="table table-striped">
     <thead>
     <tr>
-      <td>Sala</td>
+      <td  *ngFor="let field of fields">{{field}}</td>
+      <td></td>
+      <td></td>
     </tr>
     </thead>
     <tbody>
-      <tr  *ngFor="let gif of json">
-          <td>{{gif.name}}</td>
+      <tr  *ngFor="let list of json">
+          <td  *ngFor="let li of list">{{li}}</td>
+          <td>Alunos</td>
+          <td>Atividades</td>
       </tr>
     </tbody>
 </table>

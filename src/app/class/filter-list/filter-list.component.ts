@@ -10,6 +10,8 @@ export class FilterListComponent implements OnInit {
 
   @Input()
   json: any[] = [];
+  @Input()
+  fields: any[] = [];
 
   constructor() { }
 

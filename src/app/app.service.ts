@@ -22,6 +22,8 @@ export class AppService implements OnInit {
 
     private subject = new Subject<Response>();
 
+    _LOGIN:boolean = false;
+
     constructor(private http: Http) {
     }
 
@@ -51,10 +53,19 @@ export class AppService implements OnInit {
           console.log('ok, carregou;');
           gapi.client.classroom.courses.list({
             pageSize: 10
-          }).then(response => { this.sendService( response.result.courses );  });
+          }).then(response=> { this._LOGIN = true; this.sendService( response.result.courses );  });
           //gapi.auth2.getAuthInstance().signIn();
           //gapi.auth2.getAuthInstance().signOut();
-        }else  console.log('não logou;');
+        }else{
+           this._LOGIN = false;
+           console.log('não logou;');
+        }
+    }
+    login(){
+        gapi.auth2.getAuthInstance().signIn();
+    }
+    logout(){
+        gapi.auth2.getAuthInstance().signOut();
     }
     sendService(message: Response) {
         this.subject.next(message);
@@ -66,10 +77,6 @@ export class AppService implements OnInit {
         return this.subject.asObservable();
     }
 
-    pesquisarGiphy(): Observable<Response> {
-      const url = 'http://api.giphy.com/v1/gifs/search?q=fire&api_key=dc6zaTOxFJmzC&limit=1';
-      return this.http.get(url);
-    }
     //-------------- MOODLE -----------------------
     json(source: string, params:any): Observable<Response> {
       params['wstoken'] = configuration.wstoken;

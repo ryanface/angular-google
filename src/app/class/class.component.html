@@ -1,27 +1,26 @@
 <div class="row" style="margin-top: 10px">
-  <div class="col-md-2"></div>
+  <div class="col-md-2">
+
+  </div>
   <div class="col-md-6 col-centered">
       <table class="table table-striped">
           <thead>
-          <tr>
-            <td>Atividade</td>
-          </tr>
+              <input type="text" [(ngModel)]="term" (keyup)="pesquisar()">
           </thead>
           <tbody>
-              <a *ngFor="let gif of msg">
-                <img
-                  src="http://i.giphy.com/{{gif.id}}.gif" title="imagem {{gif.id}}">
-              </a>
-              <div *ngIf="LIST" class="alert alert-success">
-                  <tr  *ngFor="let gif of LIST">
-                      <td>{{gif.name}}</td>
-                  </tr>
+              <div *ngIf="_AUTENTICATE" class="alert alert-success">
+                  <button (click)="autenticate()" class='.btn-default' type="button" class="btn btn-default">Logar</button>
               </div>
-              <app-filter-list [json]="LIST"></app-filter-list>
+
+              <div *ngIf="spinner" class="alert alert-success">
+                  <div class="{{spinner}}"></div>
+              </div>
+              <app-filter-list [json]="_COURSES" [fields]="_fields"></app-filter-list>
           </tbody>
       </table>
   </div>
   <div class="col-md-2">
     <button (click)="atualizar()" class='.btn-default' type="button" class="btn btn-default">Atualizar</button>
+    <button (click)="logout()" class='.btn-default' type="button" class="btn btn-default">Logout</button>
   </div>
 </div>
