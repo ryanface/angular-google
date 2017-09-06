@@ -12,17 +12,12 @@ import { List } from './list.type';
 
 @Injectable()
 export class AppService implements OnInit {
-    public PROJECT_ID:string = configuration.PROJECT_ID;
-    public CLIENT_ID:string  = configuration.CLIENT_ID;
-    public API_SECRET:string = configuration.API_SECRET;
-    public API_KEY:string    = configuration.API_KEY;
-    public SCOPES: any[]=configuration.SCOPES;
-    public DISCOVERY_DOCS: any[] = configuration.DISCOVERY_DOCS;
-    public API_VERSION:string = 'v1';
 
     private subject = new Subject<Response>();
 
     _LOGIN:boolean = false;
+    public params:any;
+    public method:string;
 
     constructor(private http: Http) {
     }
@@ -30,8 +25,10 @@ export class AppService implements OnInit {
     ngOnInit() {
     }
 
-    google(): void {
-        console.log('google');
+    google(method='list',params={}): void {
+        console.log('google',params);
+        this.method   = method;
+        this.params   = params;
         gapi.locallib = this;
         gapi.load('client:auth2', this.initClient);
     }
@@ -50,16 +47,30 @@ export class AppService implements OnInit {
     updateSigninStatus(isSignedIn):void {
       console.log('updateSigninStatus');
         if (isSignedIn) {
-          console.log('ok, carregou;');
-          gapi.client.classroom.courses.list({
-            pageSize: 10
-          }).then(response=> { this._LOGIN = true; this.sendService( response.result.courses );  });
-          //gapi.auth2.getAuthInstance().signIn();
-          //gapi.auth2.getAuthInstance().signOut();
+          console.log('ok, logado;');
+          gapi.locallib.call();
         }else{
-           this._LOGIN = false;
            console.log('não logou;');
+           gapi.auth2.getAuthInstance().signIn();
         }
+    }
+    call(){
+      console.log('call',gapi.locallib.method,gapi.locallib.params);
+      switch(gapi.locallib.method) {
+          case 'list':
+                gapi.client.classroom.courses.list({
+                  courseStates: 'ACTIVE',
+                  pageSize: 5
+                }).then(response=> { gapi.locallib.sendService( response.result.courses );  });
+              break;
+          case 'get':
+                gapi.client.classroom.courses.get({
+                  id: gapi.locallib.params.id
+                }).then(response=> {    gapi.locallib.sendService( response.result );  });
+              break;
+          default:
+              break;
+      }
     }
     login(){
         gapi.auth2.getAuthInstance().signIn();
@@ -77,11 +88,4 @@ export class AppService implements OnInit {
         return this.subject.asObservable();
     }
 
-    //-------------- MOODLE -----------------------
-    json(source: string, params:any): Observable<Response> {
-      params['wstoken'] = configuration.wstoken;
-      params['wsfunction'] = configuration.source;
-      const url = configuration.url;
-      return this.http.get(url,{params:params});
-    }
 }

@@ -5,13 +5,13 @@
   <div class="col-md-6 col-centered">
       <table class="table table-striped">
           <thead>
-              <input type="text" [(ngModel)]="term" (keyup)="pesquisar()">
+
           </thead>
           <tbody>
               <div *ngIf="spinner.msg" class="alert alert-success">
                   <div class="{{spinner.class}}">{{spinner.msg}}</div>
               </div>
-              <cards-list [json]="_COURSES" [fields]="_fields" (sendRequest)="getActivity($event)" ([currentHerolocal])="currentHero"></cards-list>
+              <app-filter-list [json]="_COURSES"></app-filter-list>
           </tbody>
       </table>
   </div>

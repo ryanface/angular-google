@@ -1,0 +1,25 @@
+
+<!-- Term: <input type="text" #searchText (input)="search(searchText.value)">-->
+<BR/>
+<table class="table table-striped">
+    <thead>
+
+    </thead>
+    <tbody>
+      <tr  *ngFor="let list of json">
+        <div class="row courseinfo">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h4>
+                    <a [routerLink]="['/card-details', list[0]]">{{list[1]}}</a>
+                </h4>
+              </div>
+              <div class="panel-footer">
+                <a *ngIf="list[4]" href="{{list[4]}}" target="_blank"><img [src]="Google_Drive_icon"></a>
+                <a href="{{list[3]}}" target="_blank"><img [src]="Google_Classroom_icon"></a>
+              </div>
+            </div>
+        </div>
+      </tr>
+    </tbody>
+</table>

@@ -5,6 +5,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from './app.component';
 import { LoadingModule } from './loading/loading.module';
 import { ClassModule } from './class/class.module';
+import { CardDetailsModule } from './card-details/card-details.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ClassModule } from './class/class.module';
     HttpModule,
     AppRoutingModule,
     LoadingModule,
-    ClassModule
+    ClassModule,
+    CardDetailsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

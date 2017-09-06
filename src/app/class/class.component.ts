@@ -16,45 +16,65 @@ export class ClassComponent implements OnInit {
   _fields:any[] = [];
   _AUTENTICATE:boolean = false;
   subscription: Subscription;
-  spinner:string = 'spinner';
+  spinner:any = {'class':'spinner','msg':'.'};
   time:any;
   count:number = 0;
+  timeout:number = 0;
   term:string;
+  currentHerolocal = '';
 
   constructor( private AppService: AppService ) {
   }
 
   ngOnInit() {
-      this.subscription = this.AppService.getService().subscribe((lista: Response) => this.proccess(lista),(error) => console.log(error), );
       this.AppService.google();
+      this.subscription = this.AppService.getService().subscribe((lista: Response) => { this.proccess(lista);  },(error) => console.log(error), );
       this.time = setInterval(()=>this.atualizar(),2000);
   }
   ngOnDestroy() {
       this.subscription.unsubscribe();
   }
+
+  getActivity(activity:any){
+     console.log('getActivity',activity);
+  }
+
+  //AUTENTICACAO __  LOAD COURSES
   proccess(tmp:Response){
      console.log('proccess',tmp);
+     this._AUTENTICATE = true;
      this._fields = ['Id','Sala','Código'];
-     for(let i in tmp) this.LISTx.push([tmp[i].id,tmp[i].name,tmp[i].descriptionHeading]);
+     for(let i in tmp){
+        let folder = (tmp[i].teacherFolder)?tmp[i].teacherFolder.alternateLink:'';
+        this.LISTx.push([tmp[i].id,tmp[i].name,tmp[i].descriptionHeading,tmp[i].alternateLink,folder]);
+     }
      this._COURSES = this.LISTx;
      this.atualizar();
   }
   atualizar(){
-    console.log('service:',this.LISTx);
-    if((this.count >= 1) || (this.AppService._LOGIN == false)) this.clear();
-    if(this.LISTx[1] != undefined) this.count++;
-    if(this.AppService._LOGIN == false) this.autenticate();
+    this.timeout++;
+    console.log('service:',this.timeout,this.time,this.LISTx[0]);
+    if(this.count >= 1 && this._AUTENTICATE) this.clear();
+    if(this.LISTx[0] != undefined) this.count++;
+    if(this.timeout > 10 && !this._AUTENTICATE){
+       this.clear();
+       this.spinner.class = '';
+       this.spinner.msg = 'Erro ao logar, tente novamente!';
+    }
   }
   autenticate(){
-      //this._AUTENTICATE = false;
       this.AppService.login();
   }
-  logout(){      
+  logout(){
       this.AppService.logout();
+      this._AUTENTICATE = false;
+      this._COURSES = [];
   }
   clear(){
      console.log('clear');
-     this.spinner = '';
+     this.spinner.msg = '';
+     this.count = 0;
+     this.timeout = 0;
      clearInterval(this.time);
   }
   pesquisar(){

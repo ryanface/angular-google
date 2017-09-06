@@ -1,0 +1,31 @@
+
+<!-- Term: <input type="text" #searchText (input)="search(searchText.value)">-->
+<BR/>
+<table class="table table-striped">
+    <thead>
+    </thead>
+    <tbody>
+      <div class="row courseinfo">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4> {{json.name}}  </h4>
+            </div>
+              <ul class="list-group" *ngIf="json.courseMaterialSets" >
+                  <li class="list-group-item" *ngFor="let li of json.courseMaterialSets">
+                      <ul>{{li.title}}
+                        <li class="list-group-item"  *ngFor="let materials of li.materials">
+                            <div *ngIf="materials.driveFile">
+                                <a href="{{materials.driveFile.alternateLink}}" target="_blank">  
+                                     <img src="{{materials.driveFile.thumbnailUrl}}" width="15%">
+                                     {{materials.driveFile.title}}
+                                </a>
+                            </div>
+                        </li>
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+      </div>
+
+    </tbody>
+</table>
