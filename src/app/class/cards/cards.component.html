@@ -1,10 +1,7 @@
 
 <!-- Term: <input type="text" #searchText (input)="search(searchText.value)">-->
 <BR/>
-<table class="table table-striped">
-    <thead>
-
-    </thead>
+<table  class="table table-striped">
     <tbody>
       <tr  *ngFor="let list of json">
         <div class="row courseinfo">
@@ -17,6 +14,7 @@
               <div class="panel-footer">
                 <a *ngIf="list[4]" href="{{list[4]}}" target="_blank"><img [src]="Google_Drive_icon"></a>
                 <a href="{{list[3]}}" target="_blank"><img [src]="Google_Classroom_icon"></a>
+                <a [routerLink]="['/activity-details', list[0]]"><img [src]="Google_Activity_icon"></a>
               </div>
             </div>
         </div>

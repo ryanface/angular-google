@@ -1,0 +1,44 @@
+
+<!-- Term: <input type="text" #searchText (input)="search(searchText.value)">-->
+<BR/>
+<table class="table table-striped">
+    <thead>
+    </thead>
+    <tbody>
+      <div *ngIf="json.courseWork" class="row courseinfo">
+          <div class="panel panel-default">
+              <div class="panel-body">
+                <h4> Atividades </h4>
+              </div>
+              <div class="panel-footer">
+                <ul class="list-group" *ngIf="json.courseWork" >
+                    <li class="list-group-item" *ngFor="let li of json.courseWork">
+                        <ng-container [ngSwitch]="li.workType">
+                            <ng-container *ngSwitchCase="'ASSIGNMENT'"><img [src]="Google_Tarefa_icon"></ng-container>
+                            <ng-container *ngSwitchCase="'SHORT_ANSWER_QUESTION'"><img [src]="Google_Question_icon"></ng-container>
+                        </ng-container>
+                           <a *ngIf="li.title" href="{{li.alternateLink}}" target="_blank">{{li.title}}</a>
+                           <ul class="list-group">
+                           <ng-container *ngFor="let materials of li.materials">
+                               <li class="list-group-item" *ngIf="materials.driveFile">
+                                   <a href="{{materials.driveFile.alternateLink}}" target="_blank">
+                                        <img src="{{materials.driveFile.thumbnailUrl}}" width="15%">
+                                        {{materials.driveFile.title | slice:0:60}}
+                                   </a>
+                               </li>
+                               <li class="list-group-item" *ngIf="materials.youtubeVideo">
+                                   <a href="{{materials.youtubeVideo.alternateLink}}" target="_blank">
+                                        <img src="{{materials.youtubeVideo.thumbnailUrl}}" width="15%">
+                                        {{materials.youtubeVideo.title | slice:0:60}}
+                                   </a>
+                               </li>
+                           </ng-container>
+                           </ul>
+                       </li>
+                   </ul>
+                </div>
+            </div>
+        </div>
+        <div *ngElse class="row courseinfo">ww</div>
+    </tbody>
+</table>

@@ -1,0 +1,43 @@
+
+.courseinfo {
+    position: relative;
+    float: left;
+    width: 100%;
+    margin: .5em 3% .5em 0;
+    min-height: 150px;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: top center;
+    -webkit-box-shadow: 0 1px 2px 0 #eceeef;
+    box-shadow: 0 1px 2px 0 #eceeef;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.panel-body {
+    padding: 35px;
+}
+.Y93Wzb {
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    height: 5.6rem;
+    -webkit-justify-content: center;
+    justify-content: center;
+    width: 5.6rem;
+}
+.gMIble{
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zd…oiLz48cGF0aCBmaWxsPSJub25lIiBkPSJNNDkgMTg1SDI1djI0aDI0eiIvPjwvZz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 10.5rem,121.4rem;
+    flex-shrink: 0;
+}

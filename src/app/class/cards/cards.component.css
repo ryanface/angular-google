@@ -19,3 +19,11 @@
 .panel-body {
     padding: 35px;
 }
+.background{
+    background-image: url("https://lh4.googleusercontent.com/-ZMfgu_xOTds/VN0osVq8DsI/AAAAAAAAAW0/Mrs_tHKl_jY/w984-h209-no/25_earth.jpg");
+    background-position: left top;
+    background-repeat: no-repeat;
+}
+.background a {
+  color: white;
+}

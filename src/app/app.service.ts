@@ -68,6 +68,12 @@ export class AppService implements OnInit {
                   id: gapi.locallib.params.id
                 }).then(response=> {    gapi.locallib.sendService( response.result );  });
               break;
+          case 'activity':
+                //console.log(gapi.client.classroom);
+                gapi.client.classroom.courses.courseWork.list({
+                  courseId: gapi.locallib.params.id
+                }).then(response=> {    gapi.locallib.sendService( response.result );  });
+              break;
           default:
               break;
       }

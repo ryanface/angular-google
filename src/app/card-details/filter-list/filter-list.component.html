@@ -5,7 +5,7 @@
     <thead>
     </thead>
     <tbody>
-      <div class="row courseinfo">
+      <div *ngIf="json.name" class="row courseinfo">
           <div class="panel panel-default">
             <div class="panel-body">
               <h4> {{json.name}}  </h4>
@@ -15,9 +15,15 @@
                       <ul>{{li.title}}
                         <li class="list-group-item"  *ngFor="let materials of li.materials">
                             <div *ngIf="materials.driveFile">
-                                <a href="{{materials.driveFile.alternateLink}}" target="_blank">  
+                                <a href="{{materials.driveFile.alternateLink}}" target="_blank">
                                      <img src="{{materials.driveFile.thumbnailUrl}}" width="15%">
                                      {{materials.driveFile.title}}
+                                </a>
+                            </div>
+                            <div *ngIf="materials.youTubeVideo">
+                                <a href="{{materials.youTubeVideo.alternateLink}}" target="_blank">
+                                     <img src="{{materials.youTubeVideo.thumbnailUrl}}" width="15%">
+                                     {{materials.youTubeVideo.title}}
                                 </a>
                             </div>
                         </li>
