@@ -1,4 +1,6 @@
-
+.answer{
+   margin-top: 15px;
+}
 .courseinfo {
     position: relative;
     float: left;

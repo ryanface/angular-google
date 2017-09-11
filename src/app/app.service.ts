@@ -7,13 +7,14 @@ import { Injectable, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-
+import { ListCourseWork } from './listCourseWork.type';
 import { List } from './list.type';
 
 @Injectable()
 export class AppService implements OnInit {
 
     private subject = new Subject<Response>();
+    private activity = new Subject<Response>();
 
     _LOGIN:boolean = false;
     public params:any;
@@ -24,7 +25,27 @@ export class AppService implements OnInit {
 
     ngOnInit() {
     }
-
+    //--- card-details / filter-list
+    public goActivities(CourseWork:ListCourseWork[]){
+        console.log('click:goActivities');
+      for(let i in CourseWork){
+        gapi.client.classroom.courses.courseWork.studentSubmissions.list({
+          courseId: CourseWork[i].courseid,
+          courseWorkId:CourseWork[i].courseworkid
+        }).then(response=> { console.log('return:goActivities=>'+i);  this.sendActivities( response.result.studentSubmissions );  });
+      }
+    }
+    sendActivities(message: Response) {
+        console.log('return:sendActivities');
+        this.activity.next(message);
+    }
+    clearActivities() {
+        this.activity.next();
+    }
+    getActivities(): Observable<Response> {
+        return this.activity.asObservable();
+    }
+    //----
     google(method='list',params={}): void {
         console.log('google',params);
         this.method   = method;
