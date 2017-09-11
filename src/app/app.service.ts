@@ -38,6 +38,7 @@ export class AppService implements OnInit {
     sendActivities(message: Response) {
         console.log('return:sendActivities');
         this.activity.next(message);
+
     }
     clearActivities() {
         this.activity.next();
@@ -81,7 +82,7 @@ export class AppService implements OnInit {
           case 'list':
                 gapi.client.classroom.courses.list({
                   courseStates: 'ACTIVE',
-                  pageSize: 5
+                  pageSize: 500
                 }).then(response=> { gapi.locallib.sendService( response.result.courses );  });
               break;
           case 'get':

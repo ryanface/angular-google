@@ -9,7 +9,7 @@ import { Response } from '@angular/http';
 export class FilterListComponent implements OnInit {
 
   @Input()
-  json: any[] = [];
+  json: any;
   @Output()
   sendRequest = new EventEmitter<any>();
   @Output()

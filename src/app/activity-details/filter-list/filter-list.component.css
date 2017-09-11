@@ -1,5 +1,13 @@
 .answer{
    margin-top: 15px;
+   float: right;
+}
+.spacer{
+   clear: both;
+}
+.list-group{
+   margin-bottom:0px;
+   margin-top:5px;
 }
 .courseinfo {
     position: relative;

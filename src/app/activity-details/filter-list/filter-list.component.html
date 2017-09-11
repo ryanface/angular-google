@@ -1,6 +1,7 @@
 <BR/>
 <table class="table table-striped">
     <thead>
+      <input type="text" [(ngModel)]="term" (keyup)="pesquisar()">
     </thead>
     <tbody>
       <div *ngIf="json.courseWork" class="row courseinfo">
@@ -14,6 +15,7 @@
                         <ng-container [ngSwitch]="li.workType">
                             <ng-container *ngSwitchCase="'ASSIGNMENT'"><img [src]="Google_Tarefa_icon"></ng-container>
                             <ng-container *ngSwitchCase="'SHORT_ANSWER_QUESTION'"><img [src]="Google_Question_icon"></ng-container>
+                            <ng-container *ngSwitchCase="'MULTIPLE_CHOICE_QUESTION'"><img [src]="Google_Question_icon"></ng-container>
                         </ng-container>
                            <a *ngIf="li.title" href="{{li.alternateLink}}" target="_blank">{{li.title}}</a>
                            <ul class="list-group">
@@ -34,6 +36,7 @@
                                <div class="answer">
                                  <img [src]="Google_Answer_icon" (click)="open_modal(li.id)">
                               </div>
+                              <div class="spacer"></div>
                            </ul>
                        </li>
                    </ul>

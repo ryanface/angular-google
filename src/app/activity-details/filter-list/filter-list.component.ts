@@ -1,6 +1,6 @@
 declare var tingle: any;
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, NgModule } from '@angular/core';
 import { Response } from '@angular/http';
 import { NgSwitch } from '@angular/common';
 import { AppService } from "../../app.service";
@@ -17,6 +17,7 @@ export class FilterListComponent implements OnInit {
   Google_Question_icon = './assets/Google_Question_icon.png';
   Google_Tarefa_icon   = './assets/Google_Tarefa_icon.png';
   Google_Answer_icon   = './assets/Google_Answer_icon.png';
+  term:string;
 
   private modal:any;
   private answers:any[] = [];
@@ -24,7 +25,7 @@ export class FilterListComponent implements OnInit {
   private List:ListCourseWork[] = [];
 
   @Input()
-  json: any[] = [];
+  json: any = [];
 
   constructor(private AppService: AppService) { }
 
@@ -47,8 +48,10 @@ export class FilterListComponent implements OnInit {
       let html = '';
       for(let work in lista){
         this.answers[lista[work].id] = lista[work];
-        let grade = lista[work].assignedGrade;
-        html += '<li class="list-group-item"><a href="'+lista[work].alternateLink+'" target="_blank">Resposta</a> - '+lista[work].state+': userId('+lista[work].userId+'):'+'grade('+grade+')'+lista[work].courseWorkType+'</li>';
+        //if(lista[work].assignedGrade != undefined){
+             let grade = lista[work].assignedGrade;
+             html += '<li class="list-group-item"><a href="'+lista[work].alternateLink+'" target="_blank">Resposta</a> - '+lista[work].state+': userId('+lista[work].userId+'):'+'grade('+grade+')'+lista[work].courseWorkType+'</li>';
+        //}
       }
       console.log('answer',this.answers);
       this.subscription.unsubscribe();
@@ -75,7 +78,19 @@ export class FilterListComponent implements OnInit {
       this.modal.setContent(html);
       this.modal.open();
   }
-
+  pesquisar(){
+      if(this.json.courseWork_old == undefined){
+        this.json.courseWork_old = this.json.courseWork;
+      }
+      console.log(this.term);
+      this.json.courseWork = this.json.courseWork_old;
+      let tmp:any[] = [];
+      for(let i in this.json.courseWork){
+         if((this.json.courseWork[i].title.toUpperCase().indexOf(this.term.toUpperCase()) != -1))
+           tmp.push(this.json.courseWork[i]);
+      }
+      this.json.courseWork = tmp;
+  }
 
 
 }
