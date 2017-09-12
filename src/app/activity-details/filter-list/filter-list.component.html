@@ -32,6 +32,12 @@
                                             {{materials.youtubeVideo.title | slice:0:60}}
                                        </a>
                                    </li>
+                                   <li class="list-group-item" *ngIf="materials.link">
+                                       <a href="{{materials.link.url}}" target="_blank">
+                                            <img src="{{materials.link.thumbnailUrl}}" width="15%">
+                                            {{materials.link.title | slice:0:60}}
+                                       </a>
+                                   </li>
                                </ng-container>
                                <div class="answer">
                                  <img [src]="Google_Answer_icon" (click)="open_modal(li.id)">

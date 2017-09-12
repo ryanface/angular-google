@@ -27,7 +27,7 @@ export class AppService implements OnInit {
     }
     //--- card-details / filter-list
     public goActivities(CourseWork:ListCourseWork[]){
-        console.log('click:goActivities');
+        console.log('click:goActivities',CourseWork);
       for(let i in CourseWork){
         gapi.client.classroom.courses.courseWork.studentSubmissions.list({
           courseId: CourseWork[i].courseid,
@@ -36,7 +36,7 @@ export class AppService implements OnInit {
       }
     }
     sendActivities(message: Response) {
-        console.log('return:sendActivities');
+        console.log('return:sendActivities',message);
         this.activity.next(message);
 
     }

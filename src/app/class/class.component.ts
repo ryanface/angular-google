@@ -81,6 +81,7 @@ export class ClassComponent implements OnInit {
       console.log(this.term);
       let tmp:any[] = [];
       for(let i in this.LISTx){
+         if(this.LISTx[i][2] == undefined) this.LISTx[i][2] = '';
          if((this.LISTx[i][1].toUpperCase().indexOf(this.term.toUpperCase()) != -1) || (this.LISTx[i][2].toUpperCase().indexOf(this.term.toUpperCase()) != -1))
            tmp.push(this.LISTx[i]);
       }

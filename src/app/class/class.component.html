@@ -2,7 +2,7 @@
   <div class="col-md-2">
 
   </div>
-  <div class="col-md-6 col-centered">
+  <div class="col-md-8 col-centered">
       <table class="table table-striped">
           <thead>
               <input type="text" [(ngModel)]="term" (keyup)="pesquisar()">
@@ -17,7 +17,6 @@
   </div>
   <div class="col-md-2">
     <button (click)="autenticate()" *ngIf="!_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logar</button>
-    <button (click)="logout()" *ngIf="_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>
-    <button (click)="atualizar()" class='.btn-default' type="button" class="btn btn-default">Atualizar( {{currentHerolocal}} )</button>
+    <button (click)="logout()" *ngIf="_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>    
   </div>
 </div>

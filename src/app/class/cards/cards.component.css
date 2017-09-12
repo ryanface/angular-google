@@ -1,3 +1,7 @@
+.shortname{
+   font-size:0.6em;
+   float: right;
+}
 .courseinfo {
     position: relative;
     float: left;
