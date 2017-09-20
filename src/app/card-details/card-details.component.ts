@@ -10,14 +10,16 @@ import { AppService } from "../app.service";
   styleUrls: ['./card-details.component.css']
 })
 export class CardDetailsComponent implements OnInit {
-    id: number;
-    private sub: any;
 
+    /*observer*/
+    private subscription: Subscription;
+
+    private id: number;
+    private sub: any;
     LISTx:any;
     _COURSES:any[] = [];
     _fields:any[] = [];
     _AUTENTICATE:boolean = false;
-    subscription: Subscription;
     spinner:any = {'class':'spinner','msg':'.'};
     time:any;
     count:number = 0;
@@ -71,6 +73,8 @@ export class CardDetailsComponent implements OnInit {
       this.count = 0;
       this.timeout = 0;
       clearInterval(this.time);
+      this.subscription.unsubscribe();
+      this.AppService.clearService();
    }
 
-}
+  }

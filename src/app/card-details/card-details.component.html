@@ -10,7 +10,7 @@
               <div *ngIf="spinner.msg" class="alert alert-success">
                   <div class="{{spinner.class}}">{{spinner.msg}}</div>
               </div>
-              <app-filter-list [json]="_COURSES"  [spinner]="spinner" [_AUTENTICATE]="_AUTENTICATE"></app-filter-list>
+              <app-filter-list [json]="_COURSES" [courseId]="id" [spinner]="spinner" [_AUTENTICATE]="_AUTENTICATE"></app-filter-list>
           </tbody>
       </table>
   </div>

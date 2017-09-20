@@ -26,7 +26,7 @@ export class AppService implements OnInit {
 
     ngOnInit() {
     }
-
+    /*******************************API/CALLs***********************************/
     //activity-detail
     public getActivityDetail(courseId:number){
       try{
@@ -48,7 +48,7 @@ export class AppService implements OnInit {
       }
     }
 
-
+    /*******************************API/MODULES***********************************/
     //--- activity-details / filter-list
     public goActivities(CourseWork:ListCourseWork[]){
         console.log('click:goActivities',CourseWork);
@@ -62,7 +62,6 @@ export class AppService implements OnInit {
     sendActivities(message: Response) {
         console.log('return:sendActivities',message);
         this.activity.next(message);
-
     }
     clearActivities() {
         this.activity.next();
@@ -70,6 +69,7 @@ export class AppService implements OnInit {
     getActivities(): Observable<Response> {
         return this.activity.asObservable();
     }
+
     //--- class / cards
     public goEnrols(courseId:number){
         console.log('click:goEnrols',courseId);
@@ -89,13 +89,17 @@ export class AppService implements OnInit {
     }
     //---
 
-    /*******************************API***********************************/
+    /*******************************API/CLIENT***********************************/
     google(method='list',params={}): void {
         console.log('google',params);
         this.method   = method;
         this.params   = params;
-        gapi.locallib = this;
-        gapi.load('client:auth2', this.initClient);
+        if(gapi.locallib != undefined){
+           this.call();
+        }else{
+           gapi.locallib = this;
+           gapi.load('client:auth2', this.initClient);
+        }
     }
     initClient(): void {
           console.log('initClient');

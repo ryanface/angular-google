@@ -17,6 +17,7 @@ export class ActivityDetailsComponent implements OnInit {
     LISTx:any;
     _COURSES:any[] = [];
     _fields:any[] = [];
+    
     _AUTENTICATE:boolean = false;
     subscription: Subscription;
     spinner:any = {'class':'spinner','msg':'.'};
@@ -24,7 +25,6 @@ export class ActivityDetailsComponent implements OnInit {
     count:number = 0;
     timeout:number = 0;
     term:string;
-    currentHerolocal = '';
 
   constructor(private route: ActivatedRoute, private AppService: AppService) { }
 
@@ -34,6 +34,7 @@ export class ActivityDetailsComponent implements OnInit {
   }
   ngOnDestroy() {
      this.sub.unsubscribe();
+     this.subscription.unsubscribe();
    }
    go():void{
      this.AppService.getActivityDetail(this.id);
@@ -73,6 +74,8 @@ export class ActivityDetailsComponent implements OnInit {
       this.count = 0;
       this.timeout = 0;
       clearInterval(this.time);
+      this.subscription.unsubscribe();
+      this.AppService.clearService();
    }
 
 }

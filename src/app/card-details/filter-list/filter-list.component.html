@@ -12,7 +12,7 @@
                   <a href="{{json.teacherFolder.alternateLink}}" target="_blank"><img [src]="Google_Drive_icon"></a>
                   <a href="{{json.alternateLink}}" target="_blank"><img [src]="Google_Classroom_icon"></a>
                   <a [routerLink]="['/activity-details', json.id]"><img [src]="Google_Activity_icon"></a>
-                  <a (click)="open_modal(0)"><img [src]="Google_Group_icon" style="width: 41px;"></a>
+                  <a (click)="open_modal()"><img [src]="Google_Group_icon" style="width: 41px;"></a>
               </ul>
               <ul class="list-group" *ngIf="json.courseMaterialSets" >
                   <li class="list-group-item" *ngFor="let li of json.courseMaterialSets">
@@ -44,3 +44,4 @@
       </div>
     </tbody>
 </table>
+<div id="modal" class="modal"></div>
