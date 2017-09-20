@@ -1,22 +1,25 @@
 <BR/>
 <table class="table table-striped">
     <thead>
-      <input type="text" [(ngModel)]="term" (keyup)="pesquisar()">
+      <input *ngIf="_AUTENTICATE" type="text" [(ngModel)]="term" (keyup)="pesquisar()">
     </thead>
     <tbody>
-      <div *ngIf="json.courseWork" class="row courseinfo">
+      <div *ngIf="!spinner.msg" class="row courseinfo">
           <div class="panel panel-default">
               <div class="panel-body">
                 <h4> Atividades </h4>
               </div>
               <div class="panel-footer">
-                <ul class="list-group" *ngIf="json.courseWork" >
-                    <li class="list-group-item" *ngFor="let li of json.courseWork">
-                        <ng-container [ngSwitch]="li.workType">
+                  <ul class="list-group">
+                      <a [routerLink]="['/card-details', courseId]"><img [src]="Google_Activity_icon"></a>
+                  </ul>
+                  <ul class="list-group" *ngIf="json.courseWork" >
+                      <li class="list-group-item" *ngFor="let li of json.courseWork">
+                           <ng-container [ngSwitch]="li.workType">
                             <ng-container *ngSwitchCase="'ASSIGNMENT'"><img [src]="Google_Tarefa_icon"></ng-container>
                             <ng-container *ngSwitchCase="'SHORT_ANSWER_QUESTION'"><img [src]="Google_Question_icon"></ng-container>
                             <ng-container *ngSwitchCase="'MULTIPLE_CHOICE_QUESTION'"><img [src]="Google_Question_icon"></ng-container>
-                        </ng-container>
+                           </ng-container>
                            <a *ngIf="li.title" href="{{li.alternateLink}}" target="_blank">{{li.title}}</a>
                            <ul class="list-group">
                                <ng-container *ngFor="let materials of li.materials">
@@ -44,12 +47,16 @@
                               </div>
                               <div class="spacer"></div>
                            </ul>
-                       </li>
-                   </ul>
-                </div>
+                      </li>
+                 </ul>
+                 <ul *ngIf="!json.courseWork && !spinner.msg" class="list-group">
+                   <li class="list-group-item">
+                       Nenhuma Atividade
+                   </li>
+                 </ul>
+             </div>
             </div>
         </div>
-        <div *ngElse class="row courseinfo">ww</div>
     </tbody>
 </table>
 <div id="modal" class="modal"></div>

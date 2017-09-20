@@ -5,18 +5,18 @@
   <div class="col-md-8 col-centered">
       <table class="table table-striped">
           <thead>
-              <input type="text" [(ngModel)]="term" (keyup)="pesquisar()">
+              <input *ngIf="_AUTENTICATE" type="text" [(ngModel)]="term" (keyup)="pesquisar()">
           </thead>
           <tbody>
               <div *ngIf="spinner.msg" class="alert alert-success">
                   <div class="{{spinner.class}}">{{spinner.msg}}</div>
               </div>
-              <cards-list [json]="_COURSES" [fields]="_fields" (sendRequest)="getActivity($event)"></cards-list>
+              <cards-list [json]="_COURSES"></cards-list>
           </tbody>
       </table>
   </div>
   <div class="col-md-2">
     <button (click)="autenticate()" *ngIf="!_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logar</button>
-    <button (click)="logout()" *ngIf="_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>    
+    <button (click)="logout()" *ngIf="_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>
   </div>
 </div>

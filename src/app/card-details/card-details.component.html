@@ -5,18 +5,17 @@
   <div class="col-md-8 col-centered">
       <table class="table table-striped">
           <thead>
-
           </thead>
           <tbody>
               <div *ngIf="spinner.msg" class="alert alert-success">
                   <div class="{{spinner.class}}">{{spinner.msg}}</div>
               </div>
-              <app-filter-list [json]="_COURSES"></app-filter-list>
+              <app-filter-list [json]="_COURSES"  [spinner]="spinner" [_AUTENTICATE]="_AUTENTICATE"></app-filter-list>
           </tbody>
       </table>
   </div>
   <div class="col-md-2">
     <button (click)="autenticate()" *ngIf="!_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logar</button>
-    <button (click)="logout()" *ngIf="_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>  
+    <button (click)="logout()" *ngIf="_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>
   </div>
 </div>

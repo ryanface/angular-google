@@ -11,7 +11,7 @@
               <div *ngIf="spinner.msg" class="alert alert-success">
                   <div class="{{spinner.class}}">{{spinner.msg}}</div>
               </div>
-              <app-filter-list [json]="_COURSES"></app-filter-list>
+              <app-filter-list [json]="_COURSES" [courseId]="id" [_AUTENTICATE]="_AUTENTICATE" [spinner]="spinner"></app-filter-list>
           </tbody>
       </table>
   </div>

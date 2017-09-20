@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { AppService } from "../app.service";
 
+
 @Component({
   selector: 'activity-details-list',
   templateUrl: './activity-details.component.html',
@@ -29,15 +30,14 @@ export class ActivityDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => { this.id = +params['id']; this.go(); });
-
+    this.subscription = this.AppService.getService().subscribe((lista: Response) => { this.proccess(lista);  },(error) => console.log(error), );
   }
   ngOnDestroy() {
      this.sub.unsubscribe();
    }
-
    go():void{
-     this.AppService.google('activity',{id:this.id});
-     this.subscription = this.AppService.getService().subscribe((lista: Response) => { this.proccess(lista);  },(error) => console.log(error), );
+     this.AppService.getActivityDetail(this.id);
+     //this.AppService.google('activity',{id:this.id});
      this.time = setInterval(()=>this.atualizar(),2000);
    }
    //AUTENTICACAO __  LOAD COURSES

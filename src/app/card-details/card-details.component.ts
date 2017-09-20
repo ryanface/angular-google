@@ -23,21 +23,19 @@ export class CardDetailsComponent implements OnInit {
     count:number = 0;
     timeout:number = 0;
     term:string;
-    currentHerolocal = '';
 
   constructor(private route: ActivatedRoute, private AppService: AppService) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => { this.id = +params['id']; this.go(); });
-
+    this.subscription = this.AppService.getService().subscribe((lista: Response) => { this.proccess(lista);  },(error) => console.log(error), );
   }
   ngOnDestroy() {
      this.sub.unsubscribe();
    }
-
    go():void{
-     this.AppService.google('get',{id:this.id});
-     this.subscription = this.AppService.getService().subscribe((lista: Response) => { this.proccess(lista);  },(error) => console.log(error), );
+     //this.AppService.google('get',{id:this.id});
+     this.AppService.getCardDetail(this.id);
      this.time = setInterval(()=>this.atualizar(),2000);
    }
    //AUTENTICACAO __  LOAD COURSES

@@ -8,18 +8,18 @@ import { Response } from '@angular/http';
 })
 export class FilterListComponent implements OnInit {
 
+  Google_Drive_icon = './assets/Google_Drive_icon.png';
+  Google_Classroom_icon = './assets/Google_Classroom_icon.png';
+  Google_Activity_icon = './assets/Google_Activity_icon.png';
+  Google_Group_icon = './assets/Google_Group_icon.ico';
+  
   @Input()
-  json: any;
-  @Output()
-  sendRequest = new EventEmitter<any>();
-  @Output()
-  currentHerolocal = new EventEmitter<any>();
+    json: any;
+  @Input()
+    _AUTENTICATE: boolean = false;
+  @Input()
+    spinner:any = {'class':'spinner','msg':'.'};
 
-  activities(activity:any){
-        console.log('activity:',activity);
-        this.currentHerolocal = activity.id;
-        this.sendRequest.emit(activity);
-  }
 
   constructor() { }
 

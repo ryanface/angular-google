@@ -15,6 +15,7 @@ export class AppService implements OnInit {
 
     private subject = new Subject<Response>();
     private activity = new Subject<Response>();
+    private enrols = new Subject<Response>();
 
     _LOGIN:boolean = false;
     public params:any;
@@ -25,7 +26,30 @@ export class AppService implements OnInit {
 
     ngOnInit() {
     }
-    //--- card-details / filter-list
+
+    //activity-detail
+    public getActivityDetail(courseId:number){
+      try{
+          gapi.client.classroom.courses.courseWork.list({
+            courseId: courseId
+          }).then(response=> {    gapi.locallib.sendService( response.result );  });
+      }catch(e){
+          this.google('getActivityDetail',{id:courseId});
+      }
+    }
+    //cand-detail
+    public getCardDetail(courseId:number){
+      try{
+        gapi.client.classroom.courses.get({
+          id: courseId
+        }).then(response=> {    gapi.locallib.sendService( response.result );  });
+      }catch(e){
+         this.google('getCardDetail',{id:courseId});
+      }
+    }
+
+
+    //--- activity-details / filter-list
     public goActivities(CourseWork:ListCourseWork[]){
         console.log('click:goActivities',CourseWork);
       for(let i in CourseWork){
@@ -46,7 +70,26 @@ export class AppService implements OnInit {
     getActivities(): Observable<Response> {
         return this.activity.asObservable();
     }
-    //----
+    //--- class / cards
+    public goEnrols(courseId:number){
+        console.log('click:goEnrols',courseId);
+        gapi.client.classroom.courses.students.list({
+           courseId:courseId
+        }).then(response=> { console.log('return:goEnrols=>');  this.sendEnrols( response.result.students );  });
+    }
+    sendEnrols(message: Response) {
+        console.log('return:sendEnrols',message);
+        this.enrols.next(message);
+    }
+    clearEnrols() {
+        this.enrols.next();
+    }
+    getEnrols(): Observable<Response> {
+        return this.enrols.asObservable();
+    }
+    //---
+
+    /*******************************API***********************************/
     google(method='list',params={}): void {
         console.log('google',params);
         this.method   = method;
@@ -85,12 +128,12 @@ export class AppService implements OnInit {
                   pageSize: 500
                 }).then(response=> { gapi.locallib.sendService( response.result.courses );  });
               break;
-          case 'get':
+          case 'getCardDetail':
                 gapi.client.classroom.courses.get({
                   id: gapi.locallib.params.id
                 }).then(response=> {    gapi.locallib.sendService( response.result );  });
               break;
-          case 'activity':
+          case 'getActivityDetail':
                 //console.log(gapi.client.classroom);
                 gapi.client.classroom.courses.courseWork.list({
                   courseId: gapi.locallib.params.id

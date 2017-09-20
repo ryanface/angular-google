@@ -7,6 +7,8 @@ import { LoadingModule } from './loading/loading.module';
 import { ClassModule } from './class/class.module';
 import { CardDetailsModule } from './card-details/card-details.module';
 import { ActivityDetailsModule } from './activity-details/activity-details.module';
+import { GlobalDataService } from './globaldata.service';
+import { AppService } from "./app.service";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,7 @@ import { ActivityDetailsModule } from './activity-details/activity-details.modul
     CardDetailsModule,
     ActivityDetailsModule,
   ],
-  providers: [],
+  providers: [GlobalDataService,AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

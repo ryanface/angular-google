@@ -1,6 +1,8 @@
 declare var tingle: any;
+declare var jQuery:any;
+declare var $: any;
 
-import { Component, OnInit, Input, Output, EventEmitter, NgModule } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, NgModule } from '@angular/core';
 import { Response } from '@angular/http';
 import { NgSwitch } from '@angular/common';
 import { AppService } from "../../app.service";
@@ -14,10 +16,16 @@ import { ListCourseWork } from '../../listCourseWork.type';
 })
 export class FilterListComponent implements OnInit {
 
+  public Google_Drive_icon    = './assets/Google_Drive_icon.png';
+  public Google_Classroom_icon= './assets/Google_Classroom_icon.png';
+  public Google_Activity_icon = './assets/Google_Activity_icon.png';
+  public Google_Group_icon    = './assets/Google_Group_icon.ico';
+
   Google_Question_icon = './assets/Google_Question_icon.png';
   Google_Tarefa_icon   = './assets/Google_Tarefa_icon.png';
   Google_Answer_icon   = './assets/Google_Answer_icon.png';
-  term:string;
+
+  public term:string;
 
   private modal:any;
   private answers:any[] = [];
@@ -25,13 +33,21 @@ export class FilterListComponent implements OnInit {
   private List:ListCourseWork[] = [];
 
   @Input()
-  json: any = [];
+    json: any = [];
+  @Input()
+    _AUTENTICATE: boolean = false;
+  @Input()
+    spinner:any = {'class':'spinner','msg':'.'};
+  @Input()
+    courseId:number;
 
   constructor(private AppService: AppService) { }
 
   ngOnInit() {
-  }
 
+  }
+  ngAfterViewInit() {
+  }
   activities(courseWork:number){
       console.log('click:activities');
       this.List = [];
@@ -48,22 +64,44 @@ export class FilterListComponent implements OnInit {
         //if(lista[work].assignedGrade != undefined){
             let grade = lista[work].assignedGrade;
             let usersList = '';
-            if(lista[work].assignmentSubmission!= undefined){
-              if(lista[work].assignmentSubmission.attachments != undefined){
-                 let attachments = lista[work].assignmentSubmission.attachments;
-                for(let i in attachments){
-                   if(attachments[i].driveFile != undefined)
-                      usersList += '<img src="'+attachments[i].driveFile.thumbnailUrl+'" width="10%"><a href="'+attachments[i].driveFile.alternateLink+'" target="_blank"> Arquivo:'+attachments[i].driveFile.title+'</a>';
+            switch(lista[work].courseWorkType){
+              case 'ASSIGNMENT':
+                if(lista[work].assignmentSubmission!= undefined){
+                  if(lista[work].assignmentSubmission.attachments != undefined){
+                     let attachments = lista[work].assignmentSubmission.attachments;
+                    for(let i in attachments){
+                       if(attachments[i].driveFile != undefined)
+                          usersList += '<img src="'+attachments[i].driveFile.thumbnailUrl+'" width="10%"><a href="'+attachments[i].driveFile.alternateLink+'" target="_blank"> Arquivo:'+attachments[i].driveFile.title+'</a>';
+                    }
+                    html += '<li class="list-group-item"><a href="'+lista[work].alternateLink+'" target="_blank">Nota:</a> - '+usersList+'</li>';
+                  }
                 }
-                html += '<li class="list-group-item"><a href="'+lista[work].alternateLink+'" target="_blank">Correção</a> - '+usersList+'</li>';
-              }
+              break;
+              case 'MULTIPLE_CHOICE_QUESTION':
+                if(lista[work].multipleChoiceSubmission!= undefined){
+                  if(lista[work].multipleChoiceSubmission.answer != undefined){
+                     let answer = lista[work].multipleChoiceSubmission;
+                     usersList += 'Resposta:'+answer.answer;
+                     html += '<li class="list-group-item"><a href="'+lista[work].alternateLink+'" target="_blank">Nota:</a> - '+usersList+'</li>';
+                  }
+                }
+              break;
+              case 'SHORT_ANSWER_QUESTION':
+                if(lista[work].shortAnswerSubmission!= undefined){
+                  if(lista[work].shortAnswerSubmission.answer != undefined){
+                     let answer = lista[work].shortAnswerSubmission;
+                     usersList += 'Resposta:'+answer.answer;
+                     html += '<li class="list-group-item"><a href="'+lista[work].alternateLink+'" target="_blank">Nota:</a> - '+usersList+'</li>';
+                  }
+                }
+              break;
             }
              //html += '<li class="list-group-item"><a href="'+lista[work].alternateLink+'" target="_blank">Resposta</a> - '+usersList+'</li>'
              //+lista[work].state+': userId('+lista[work].userId+'):'+'grade('+grade+')'+lista[work].courseWorkType+'</li>';
         //}
       }
       html = (html == '') ? '<li class="list-group-item">nenhuma entrega</li>':html;
-      
+
       this.subscription.unsubscribe();
       this.AppService.clearActivities();
       this.modal.close();

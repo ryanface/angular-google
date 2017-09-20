@@ -1,5 +1,3 @@
-
-<!-- Term: <input type="text" #searchText (input)="search(searchText.value)">-->
 <BR/>
 <table  class="table table-striped">
     <tbody>
@@ -8,7 +6,7 @@
             <div class="panel panel-default">
               <div class="panel-body">
                 <h4>
-                    <a [routerLink]="['/card-details', list[0]]">{{list[1]}}</a>
+                    <a [routerLink]="['/card-details', list[0]]" [queryParams]="_COURSES">{{list[1]}}</a>
                     <small class="shortname">{{list[2]}}</small>
                 </h4>
               </div>
@@ -16,9 +14,11 @@
                 <a *ngIf="list[4]" href="{{list[4]}}" target="_blank"><img [src]="Google_Drive_icon"></a>
                 <a href="{{list[3]}}" target="_blank"><img [src]="Google_Classroom_icon"></a>
                 <a [routerLink]="['/activity-details', list[0]]"><img [src]="Google_Activity_icon"></a>
+                <a (click)="open_modal(list[0])"><img [src]="Google_Group_icon" style="width: 41px;"></a>
               </div>
             </div>
         </div>
       </tr>
     </tbody>
 </table>
+<div id="modal" class="modal"></div>

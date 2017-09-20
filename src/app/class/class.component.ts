@@ -2,6 +2,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { Response } from '@angular/http';
 import { Subscription } from 'rxjs/Subscription';
 import { AppService } from "../app.service";
+import { GlobalDataService } from '../globaldata.service';
 import { List } from '../list.type';
 
 @Component({
@@ -23,7 +24,7 @@ export class ClassComponent implements OnInit {
   term:string;
   currentHerolocal = '';
 
-  constructor( private AppService: AppService ) {
+  constructor( private AppService: AppService, private gd:GlobalDataService ) {
   }
 
   ngOnInit() {
@@ -33,10 +34,6 @@ export class ClassComponent implements OnInit {
   }
   ngOnDestroy() {
       this.subscription.unsubscribe();
-  }
-
-  getActivity(activity:any){
-     console.log('getActivity',activity);
   }
 
   //AUTENTICACAO __  LOAD COURSES

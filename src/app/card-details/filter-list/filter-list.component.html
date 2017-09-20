@@ -1,6 +1,3 @@
-
-<!-- Term: <input type="text" #searchText (input)="search(searchText.value)">-->
-<BR/>
 <table class="table table-striped">
     <thead>
     </thead>
@@ -8,15 +5,22 @@
       <div *ngIf="json.name" class="row courseinfo">
           <div class="panel panel-default">
             <div class="panel-body">
-              <h4> {{json.name}}  </h4>
+              <h4> {{json.name}} - Materiais </h4>
             </div>
+            <div class="panel-footer">
+              <ul class="list-group">
+                  <a href="{{json.teacherFolder.alternateLink}}" target="_blank"><img [src]="Google_Drive_icon"></a>
+                  <a href="{{json.alternateLink}}" target="_blank"><img [src]="Google_Classroom_icon"></a>
+                  <a [routerLink]="['/activity-details', json.id]"><img [src]="Google_Activity_icon"></a>
+                  <a (click)="open_modal(0)"><img [src]="Google_Group_icon" style="width: 41px;"></a>
+              </ul>
               <ul class="list-group" *ngIf="json.courseMaterialSets" >
                   <li class="list-group-item" *ngFor="let li of json.courseMaterialSets">
                       <ul>{{li.title}}
                         <li class="list-group-item"  *ngFor="let materials of li.materials">
                             <div *ngIf="materials.driveFile">
                                 <a href="{{materials.driveFile.alternateLink}}" target="_blank">
-                                     <img src="{{materials.driveFile.thumbnailUrl}}" width="15%">
+                                     <img src="{{materials.driveFile.thumbnailUrl}}" width="10%">
                                      {{materials.driveFile.title}}
                                 </a>
                             </div>
@@ -30,8 +34,13 @@
                       </ul>
                   </li>
               </ul>
+              <ul *ngIf="!json.courseMaterialSets && !spinner.msg" class="list-group">
+                <li class="list-group-item">
+                    Nenhum Material
+                </li>
+              </ul>
+            </div> <!--/panel-footer-->
           </div>
       </div>
-
     </tbody>
 </table>
