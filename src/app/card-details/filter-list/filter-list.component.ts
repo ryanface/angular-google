@@ -43,7 +43,7 @@ export class FilterListComponent implements OnInit {
       let html = '';
       for(let work in lista){
          let user = lista[work];
-         html += '<li class="list-group-item"><img src="'+user.profile.photoUrl+'" width="10%"> '+user.profile.name.fullName+' <small class="shortname" style="float: right;margin-top: 30px">'+user.profile.emailAddress+'</small></li>';
+         html += '<li class="list-group-item"><img src="'+user.profile.photoUrl+'" width="5%"> '+user.profile.name.fullName+' <small class="shortname" style="float: right;margin-top: 15px">'+user.profile.emailAddress+'</small></li>';
       }
       html = (html == '') ? '<li class="list-group-item">nenhuma aluno</li>':html;
 
@@ -52,6 +52,13 @@ export class FilterListComponent implements OnInit {
       this.modal.close();
       this.modal.setContent('<div class="panel panel-default"><div class="panel-footer"><ul class="list-group">'+html+'</ul></div></div>');
       this.modal.open();
+  }
+  get_logs(){
+      let mail:string = 'naiara.rodrigues@mail.fae.edu';
+      console.log('get_logs');
+      this.AppService.getAllLogs().subscribe(posts => {
+        console.log(posts);
+      });
   }
   open_modal():void{
       console.log('courseId',this.courseId);
