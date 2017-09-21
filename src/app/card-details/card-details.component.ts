@@ -14,7 +14,7 @@ export class CardDetailsComponent implements OnInit {
     /*observer*/
     private subscription: Subscription;
 
-    private id: number;
+    public id: number;
     private sub: any;
     LISTx:any;
     _COURSES:any[] = [];

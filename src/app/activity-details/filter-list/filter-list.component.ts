@@ -51,7 +51,15 @@ export class FilterListComponent implements OnInit {
       console.log('click:activities');
       this.List = [];
       this.List.push(new ListCourseWork(this.json['courseWork'][0].courseId, courseWork));
-      this.get_enrol(this.json['courseWork'][0].courseId);
+
+      if(this.enrolsList)
+        this.getActivities();
+      else
+        this.get_enrol(this.json['courseWork'][0].courseId);
+  }
+  getActivities(){
+      this.AppService.goActivities(this.List);
+      this.subscription = this.AppService.getActivities().subscribe((lista: Response) => { this.process(lista);  },(error) => console.log(error), );
   }
   process(lista:any):void{
       console.log('answer',lista);
@@ -149,9 +157,7 @@ export class FilterListComponent implements OnInit {
     }
     this.enrolsList = tmp;
 
-    this.AppService.goActivities(this.List);
-    this.subscription = this.AppService.getActivities().subscribe((lista: Response) => { this.process(lista);  },(error) => console.log(error), );
-
+    this.getActivities();
     this.enrols.unsubscribe();
     this.AppService.clearEnrols();
   }

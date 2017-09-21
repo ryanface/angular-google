@@ -39,14 +39,21 @@ export class ClassComponent implements OnInit {
   //AUTENTICACAO __  LOAD COURSES
   proccess(tmp:Response){
      console.log('proccess',tmp);
-     this._AUTENTICATE = true;
-     this._fields = ['Id','Sala','Código'];
-     for(let i in tmp){
-        let folder = (tmp[i].teacherFolder)?tmp[i].teacherFolder.alternateLink:'';
-        this.LISTx.push([tmp[i].id,tmp[i].name,tmp[i].descriptionHeading,tmp[i].alternateLink,folder]);
+     if(tmp['api']){
+         this.clear();
+         this.spinner.class = '';
+         this.spinner.msg = 'Usuário não autenticado!';
+         this.time = setInterval(()=>this.atualizar(),2000);
+     }else{
+         this._AUTENTICATE = true;
+         this._fields = ['Id','Sala','Código'];
+         for(let i in tmp){
+            let folder = (tmp[i].teacherFolder)?tmp[i].teacherFolder.alternateLink:'';
+            this.LISTx.push([tmp[i].id,tmp[i].name,tmp[i].descriptionHeading,tmp[i].alternateLink,folder]);
+         }
+         this._COURSES = this.LISTx;
+         this.atualizar();
      }
-     this._COURSES = this.LISTx;
-     this.atualizar();
   }
   atualizar(){
     this.timeout++;

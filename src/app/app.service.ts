@@ -120,6 +120,7 @@ export class AppService implements OnInit {
           gapi.locallib.call();
         }else{
            console.log('não logou;');
+           gapi.locallib.sendService( {api:'login_error'} );
            gapi.auth2.getAuthInstance().signIn();
         }
     }

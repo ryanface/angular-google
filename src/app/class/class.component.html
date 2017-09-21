@@ -8,8 +8,8 @@
               <input *ngIf="_AUTENTICATE" type="text" [(ngModel)]="term" (keyup)="pesquisar()">
           </thead>
           <tbody>
-              <div *ngIf="spinner.msg" class="alert alert-success">
-                  <div class="{{spinner.class}}">{{spinner.msg}}</div>
+              <div *ngIf="spinner.msg && !_AUTENTICATE" class="alert alert-success">
+                  {{timeout}}<div class="{{spinner.class}}">{{spinner.msg}}</div>
               </div>
               <cards-list [json]="_COURSES"></cards-list>
           </tbody>
