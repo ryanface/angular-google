@@ -4,9 +4,9 @@ var configuration = require('../configuration');
 //import configuration  from '../configuration.json';
 
 import { Injectable, OnInit } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import { ListCourseWork } from './listCourseWork.type';
 import { List } from './list.type';
@@ -165,8 +165,10 @@ export class AppService implements OnInit {
         return this.subject.asObservable();
     }
     /*******************************API/LOG***********************************/
-    getAllLogs() {     
-      let params:any = {"params": {"token":"00948692FF46EDA322EC808B855A7F92234567","restformat":"json","method":"get_grades","params_method":"1024218,1024264"} };
-      return this.http.post('http://integrador.net:8080/Api',params).map(response => response.json())
+    json(mail:string): Observable<Response> {
+      let params:any = [];
+      params['params'] = JSON.stringify({"token":"00948692FF46EDA322EC808B855A7F92234567","restformat":"json","method":"get_log_google","params_method":mail});
+      const url = 'http://integrador.net:8080/Api';
+      return this.http.get(url,{params:params});
     }
 }

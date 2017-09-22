@@ -41,7 +41,7 @@ export class CardsComponent implements OnInit {
       let html = '';
       for(let work in lista){
          let user = lista[work];
-         html += '<li class="list-group-item"><img src="'+user.profile.photoUrl+'" width="5%"> '+user.profile.name.fullName+' <small class="shortname" style="float: right;margin-top: 15px">'+user.profile.emailAddress+'</small></li>';
+         html += '<li class="list-group-item"><img src="'+user.profile.photoUrl+'" width="5%"> '+user.profile.name.fullName+' <small class="shortname" style="float: right;margin-top: 10px">'+user.profile.emailAddress+'</small></li>';
       }
       html = (html == '') ? '<li class="list-group-item">nenhuma aluno</li>':html;
 
@@ -54,7 +54,7 @@ export class CardsComponent implements OnInit {
   open_modal(courseWork:number):void{
       console.log('courseWork',courseWork);
       this.enrols(courseWork);
-      let html = '<div class="panel panel-default"><div class="panel-footer"><ul class="list-group"></ul></div></div>';
+      let html = '<div class="panel panel-default"><div class="panel-footer"><ul class="list-group">loading...</ul></div></div>';
       this.modal = new tingle.modal({
           footer: true,
           stickyFooter: false,

@@ -1,4 +1,8 @@
-
+.icon_close{
+   width: 35px;
+   float:right;
+   margin-top: -5px;
+}
 .courseinfo {
     position: relative;
     float: left;

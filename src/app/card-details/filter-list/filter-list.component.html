@@ -14,6 +14,23 @@
                   <a [routerLink]="['/activity-details', json.id]"><img [src]="Google_Activity_icon"></a>
                   <a (click)="open_modal()"><img [src]="Google_Group_icon" style="width: 41px;"></a>
               </ul>
+              <ul *ngIf="activate" class="list-group">
+                <li class="list-group-item">
+                  <ul class="list-group">
+                     <li class="list-group-item">
+                        <input *ngIf="_AUTENTICATE" type="text" [(ngModel)]="term" (keyup)="pesquisar()">
+                        <img [src]="Google_Close_icon" (click)="close()" class="icon_close">
+                     </li>
+                  </ul>
+                  <ul class="list-group">
+                     <li *ngFor="let user of Users" class="list-group-item">
+                        <img src="{{user.profile.photoUrl}}" width="5%">{{user.profile.name.fullName}}
+                        <small class="shortname" style="float: right;margin-top: 15px">{{user.profile.emailAddress}}</small>
+                        <a (click)="get_logs(user)"><img [src]="Google_Log_icon" style="width: 41px;"></a>
+                     </li>
+                  </ul>
+                </li>
+              </ul>
               <ul class="list-group" *ngIf="json.courseMaterialSets" >
                   <li class="list-group-item" *ngFor="let li of json.courseMaterialSets">
                       <ul>{{li.title}}
@@ -44,4 +61,3 @@
       </div>
     </tbody>
 </table>
-<div id="modal" class="modal"></div>

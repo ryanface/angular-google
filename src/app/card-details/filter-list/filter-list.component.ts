@@ -1,5 +1,5 @@
 declare var tingle: any;
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Response } from '@angular/http';
 import { Subscription } from 'rxjs/Subscription';
 import { AppService } from "../../app.service";
@@ -15,10 +15,20 @@ export class FilterListComponent implements OnInit {
   Google_Classroom_icon = './assets/Google_Classroom_icon.png';
   Google_Activity_icon  = './assets/Google_Activity_icon.png';
   Google_Group_icon     = './assets/Google_Group_icon.ico';
+  Google_Close_icon     = './assets/Google_Close_icon.ico';
+  Google_Log_icon       = './assets/Google_Log_icon.png';
 
   /*enrols*/
   private modal:any;
   private enrols: Subscription;
+
+  public UserList:any[] = [];
+  public Users:any[] = [];
+  public term:string;
+  public timer:any;
+  public timeout:number = 0;
+  private activate:boolean = false;
+
 
   @Input()
     json: any;
@@ -34,50 +44,56 @@ export class FilterListComponent implements OnInit {
   ngOnInit() {
   }
   /*enrols list*/
-  start():void{
-    this.AppService.goEnrols(this.courseId);
-    this.enrols = this.AppService.getEnrols().subscribe((lista: Response) => { this.process_enrol(lista);  },(error) => console.log(error), );
-  }
-  process_enrol(lista:any):void{
-      console.log('enrols',lista);
-      let html = '';
-      for(let work in lista){
-         let user = lista[work];
-         html += '<li class="list-group-item"><img src="'+user.profile.photoUrl+'" width="5%"> '+user.profile.name.fullName+' <small class="shortname" style="float: right;margin-top: 15px">'+user.profile.emailAddress+'</small></li>';
-      }
-      html = (html == '') ? '<li class="list-group-item">nenhuma aluno</li>':html;
-
-      this.enrols.unsubscribe();
-      this.AppService.clearEnrols();
-      this.modal.close();
-      this.modal.setContent('<div class="panel panel-default"><div class="panel-footer"><ul class="list-group">'+html+'</ul></div></div>');
-      this.modal.open();
-  }
-  get_logs(){
-      let mail:string = 'naiara.rodrigues@mail.fae.edu';
-      console.log('get_logs');
-      this.AppService.getAllLogs().subscribe(posts => {
-        console.log(posts);
-      });
-  }
   open_modal():void{
       console.log('courseId',this.courseId);
       //this.process_enrol(courseWork);
+      this.timer = setInterval(()=>this.atualiza(),1000);
       this.start();
-      let html = '<div class="panel panel-default"><div class="panel-footer"><ul class="list-group"></ul></div></div>';
-      this.modal = new tingle.modal({
-          footer: true,
-          stickyFooter: false,
-          cssClass: ['modal'],
-          onOpen: function() {
-              console.log('modal open');
-          },
-          onClose: function() {
-              console.log('modal closed');
-          }
-      });
-      this.modal.setContent(html);
-      this.modal.open();
   }
+  atualiza(){
+     this.timeout++;
+    if(this.timeout >= 5){
+        clearInterval(this.timer);
+        this.timeout = 0;
+    }
+  }
+  start():void{
+    if(this.UserList[0]){
+        this.Users = this.UserList;
+    }else{
+        this.AppService.goEnrols(this.courseId);
+        this.enrols = this.AppService.getEnrols().subscribe((lista: Response) => { this.process_enrol(lista);  },(error) => console.log(error), );
+    }
+    this.activate = true;
+  }
+  process_enrol(lista:any):void{
+      console.log('enrols',lista);
+      this.UserList = [];
+      for(let work in lista){
+         this.UserList.push(lista[work]);
+      }
+      this.Users = this.UserList;
+      this.enrols.unsubscribe();
+      this.AppService.clearEnrols();
+  }
+  close(){
+      this.activate = false;
+  }
+  pesquisar(){
+      console.log(this.term);
+      let tmp:any[] = [];
+      for(let i in this.UserList){
+         if((this.UserList[i].profile.name.fullName.toUpperCase().indexOf(this.term.toUpperCase()) != -1) || (this.UserList[i].profile.emailAddress.toUpperCase().indexOf(this.term.toUpperCase()) != -1))
+           tmp.push(this.UserList[i]);
+      }
+      this.Users = tmp;
+  }
+  get_logs(user:any){
+      //let mail:string = 'naiara.rodrigues@mail.fae.edu';
+      let mail:string = user.profile.emailAddress;
+      console.log('get_logs',user);
+      this.AppService.json(mail).subscribe((response: Response) => { console.log(response.json()); } );
+  }
+
 
 }
