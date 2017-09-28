@@ -15,5 +15,8 @@ var request = require('request');
 */
 ipaddress = process.env.OPENSHIFT_NODEJS_IP || 'moodle.net';
 port      = process.env.OPENSHIFT_NODEJS_PORT || '4200';
+//ipaddress = 'integrador.franciscanos.net';
+//port      = '8080';
+
 console.log(port,ipaddress);
 server.listen(port,ipaddress);
