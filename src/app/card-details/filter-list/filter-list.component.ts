@@ -28,6 +28,7 @@ export class FilterListComponent implements OnInit {
   public timer:any;
   public timeout:number = 0;
   private activate:boolean = false;
+  private userSelected:any;
 
 
   @Input()
@@ -88,12 +89,45 @@ export class FilterListComponent implements OnInit {
       }
       this.Users = tmp;
   }
-  get_logs(user:any){
+  open_logs(user:any):void{
+      console.log('user',user);
+      this.userSelected = user;
       //let mail:string = 'naiara.rodrigues@mail.fae.edu';
-      let mail:string = user.profile.emailAddress;
       console.log('get_logs',user);
-      this.AppService.json(mail).subscribe((response: Response) => { console.log(response.json()); } );
+      //'naiara.rodrigues@mail.fae.edu'
+      this.AppService.json(user.profile.emailAddress).subscribe((response: Response) => { this.process(response.json()); } );
+
+      let html = '<div class="panel panel-default"><div class="panel-footer"><ul class="list-group">loading...</ul></div></div>';
+      this.modal = new tingle.modal({
+          footer: true,
+          stickyFooter: false,
+          cssClass: ['modal'],
+          onOpen: function() {
+              console.log('modal open');
+          },
+          onClose: function() {
+              console.log('modal closed');
+          }
+      });
+      this.modal.setContent(html);
+      this.modal.open();
   }
+  process(lista:any):void{
+      console.log('logs',lista);
+      let html = '<li class="list-group-item"><img src="'+this.userSelected.profile.photoUrl+'" width="5%"> '+this.userSelected.profile.name.fullName+' <small class="shortname" style="float: right;margin-top: 10px">'+this.userSelected.profile.emailAddress+'</small></li>';
+      let html2 = '';
+      let line:any = {};
+      for(let lines in lista){
+        for(let work in lista[lines].Rows){
+            line = lista[lines].Rows[work];
+            html2 += '<li class="list-group-item">Id:'+line.indice+','+line.status+','+line.date+','+line.msg+'</li>';
+        }
+        html2 += '<li class="list-group-item">Total de logs:'+lista[lines].TotalRows+'</li>';
+      }
 
-
+      html = (html2 == '') ? '<li class="list-group-item">nenhuma log</li>':html;
+      this.modal.close();
+      this.modal.setContent('<div class="panel panel-default"><div class="panel-footer"><ul class="list-group">'+html+'</ul><ul class="list-group">'+html2+'</ul></div></div>');
+      this.modal.open();
+  }
 }

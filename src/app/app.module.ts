@@ -9,10 +9,11 @@ import { CardDetailsModule } from './card-details/card-details.module';
 import { ActivityDetailsModule } from './activity-details/activity-details.module';
 import { GlobalDataService } from './globaldata.service';
 import { AppService } from "./app.service";
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +23,7 @@ import { AppService } from "./app.service";
     ClassModule,
     CardDetailsModule,
     ActivityDetailsModule,
+    LoginModule,
   ],
   providers: [GlobalDataService,AppService],
   bootstrap: [AppComponent]

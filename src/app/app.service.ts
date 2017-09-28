@@ -5,6 +5,7 @@ var configuration = require('../configuration');
 
 import { Injectable, OnInit } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
@@ -17,12 +18,15 @@ export class AppService implements OnInit {
     private subject = new Subject<Response>();
     private activity = new Subject<Response>();
     private enrols = new Subject<Response>();
+    private rooms = new Subject<Response>();
 
     _LOGIN:boolean = false;
     public params:any;
     public method:string;
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+                private route: Router) {
+        gapi.route = route;
     }
 
     ngOnInit() {
@@ -89,7 +93,29 @@ export class AppService implements OnInit {
         return this.enrols.asObservable();
     }
     //---
-
+    //--- class
+    public goRooms(){
+        console.log('click:goRooms');
+        if(gapi.client == undefined || gapi.client.classroom == undefined || gapi.client.classroom.courses == undefined){
+           gapi.route.navigate(['login']);
+        }else{
+            gapi.client.classroom.courses.list({
+              courseStates: 'ACTIVE',
+              pageSize: 500
+            }).then(response=> { gapi.locallib.sendRooms( response.result.courses );  });
+        }
+    }
+    sendRooms(message: Response) {
+        console.log('return:sendRooms',message);
+        this.rooms.next(message);
+    }
+    clearRooms() {
+        this.rooms.next();
+    }
+    getRooms(): Observable<Response> {
+        return this.rooms.asObservable();
+    }
+    //---
     /*******************************API/CLIENT***********************************/
     google(method='list',params={}): void {
         console.log('google',params);
@@ -118,11 +144,14 @@ export class AppService implements OnInit {
       console.log('updateSigninStatus');
         if (isSignedIn) {
           console.log('ok, logado;');
-          gapi.locallib.call();
+          //gapi.locallib.call();
+          gapi.locallib.sendService( {'ok':'logado'} );
         }else{
            console.log('não logou;');
-           gapi.locallib.sendService( {api:'login_error'} );
-           gapi.auth2.getAuthInstance().signIn();
+           gapi.route.navigate(['login']);
+           if(gapi.locallib)
+             gapi.locallib.sendService( {api:'login_error'} );
+           //gapi.auth2.getAuthInstance().signIn();
         }
     }
     call(){
@@ -149,11 +178,51 @@ export class AppService implements OnInit {
               break;
       }
     }
-    login(){
-        gapi.auth2.getAuthInstance().signIn();
+    /*----------------------NEW--------------------------*/
+    checkLogin():void{
+        if(gapi.locallib){
+           gapi.locallib.sendService( {'ok':'logado'} );
+        }else{
+           gapi.route.navigate(['login']);
+        }
+    }
+    login():void{
+        gapi.locallib = this;
+        gapi.load('client:auth2', this.loginProccess);
+    }
+    loginProccess():void{
+        console.log('loginProccess')
+        gapi.client.init({
+          discoveryDocs: configuration.discoveryDocs,
+          clientId: configuration.clientId,
+          scope: configuration.scope
+        }).then( () => {
+          gapi.auth2.getAuthInstance().isSignedIn.listen(gapi.locallib.loginEnd);
+          gapi.locallib.loginStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
+    }
+    loginStatus(isSignedIn):void{
+        console.log('loginStatus',isSignedIn);
+        if(isSignedIn){
+          gapi.route.navigate(['dashboard']);
+        }else{
+          if(gapi.locallib)
+            gapi.locallib.sendService( {api:'login_error'} );
+            gapi.auth2.getAuthInstance().signIn();
+        }
+    }
+    loginEnd(isSignedIn):void{
+        console.log('loginEnd',isSignedIn);
+        if(!isSignedIn){
+
+          gapi.route.navigate(['login']);
+        }else
+          gapi.route.navigate(['dashboard']);
     }
     logout(){
         gapi.auth2.getAuthInstance().signOut();
+        //gapi.locallib = undefined;
+        //gapi.client = undefined;
     }
     sendService(message: Response) {
         this.subject.next(message);
@@ -168,7 +237,7 @@ export class AppService implements OnInit {
     json(mail:string): Observable<Response> {
       let params:any = [];
       params['params'] = JSON.stringify({"token":"00948692FF46EDA322EC808B855A7F92234567","restformat":"json","method":"get_log_google","params_method":mail});
-      const url = 'http://integrador.net:8080/Api';
+      const url = 'http://integrador.franciscanos.net/Api';
       return this.http.get(url,{params:params});
     }
 }

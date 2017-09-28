@@ -5,7 +5,7 @@ import { ClassComponent } from "./class.component";
 @NgModule({
   imports:[
     RouterModule.forChild([
-      { path: 'google', component: ClassComponent },
+      { path: 'turmas', component: ClassComponent },
     ])
   ],
   exports:[

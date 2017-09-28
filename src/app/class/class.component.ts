@@ -1,4 +1,5 @@
 import { Component, OnInit, NgModule } from '@angular/core';
+import { Router } from '@angular/router';
 import { Response } from '@angular/http';
 import { Subscription } from 'rxjs/Subscription';
 import { AppService } from "../app.service";
@@ -24,12 +25,14 @@ export class ClassComponent implements OnInit {
   term:string;
   currentHerolocal = '';
 
-  constructor( private AppService: AppService, private gd:GlobalDataService ) {
+  constructor( private AppService: AppService,
+               private gd:GlobalDataService,
+               private route: Router ) {
   }
 
   ngOnInit() {
-      this.AppService.google();
-      this.subscription = this.AppService.getService().subscribe((lista: Response) => { this.proccess(lista);  },(error) => console.log(error), );
+      this.AppService.goRooms();
+      this.subscription = this.AppService.getRooms().subscribe((lista: Response) => { this.proccess(lista);  },(error) => console.log(error), );
       this.time = setInterval(()=>this.atualizar(),2000);
   }
   ngOnDestroy() {
@@ -39,11 +42,14 @@ export class ClassComponent implements OnInit {
   //AUTENTICACAO __  LOAD COURSES
   proccess(tmp:Response){
      console.log('proccess',tmp);
+     this.subscription.unsubscribe();
+     this.AppService.clearRooms();
+
      if(tmp['api']){
+         console.log("api",tmp);
          this.clear();
-         this.spinner.class = '';
-         this.spinner.msg = 'Usuário não autenticado!';
-         this.time = setInterval(()=>this.atualizar(),2000);
+         this.autenticate();
+         this.route.navigate(['login']);
      }else{
          this._AUTENTICATE = true;
          this._fields = ['Id','Sala','Código'];

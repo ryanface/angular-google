@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoadingComponent } from "./loading.component";
+import { LoginComponent } from "./login.component";
 
 @NgModule({
   imports:[
     RouterModule.forChild([
-      { path: 'dashboard', component: LoadingComponent },
+      { path: 'login', component: LoginComponent },
+      { path: '', component: LoginComponent },
     ])
   ],
   exports:[
@@ -14,4 +15,4 @@ import { LoadingComponent } from "./loading.component";
 
 })
 
-export class LoadingRoutingModule{}
+export class LoginRoutingModule{}

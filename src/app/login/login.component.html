@@ -1,0 +1,20 @@
+<div class="row" style="margin-top: 10px">
+  <div class="col-md-2">
+
+  </div>
+  <div class="col-md-8 col-centered">
+      <table class="table table-striped">
+          <thead>
+          </thead>
+          <tbody>{{count}}
+              <div *ngIf="spinner.msg" class="alert alert-success">
+                  <div class="{{spinner.class}}">{{spinner.msg}}</div>
+              </div>
+          </tbody>
+      </table>
+  </div>
+  <div class="col-md-2">
+    <button (click)="autenticate()" *ngIf="!AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logar</button>
+    <button (click)="logout()" *ngIf="AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>
+  </div>
+</div>

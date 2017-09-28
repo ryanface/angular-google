@@ -26,7 +26,7 @@
                      <li *ngFor="let user of Users" class="list-group-item">
                         <img src="{{user.profile.photoUrl}}" width="5%">{{user.profile.name.fullName}}
                         <small class="shortname" style="float: right;margin-top: 15px">{{user.profile.emailAddress}}</small>
-                        <a (click)="get_logs(user)"><img [src]="Google_Log_icon" style="width: 41px;"></a>
+                        <a (click)="open_logs(user)"><img [src]="Google_Log_icon" style="width: 41px;"></a>
                      </li>
                   </ul>
                 </li>
@@ -61,3 +61,5 @@
       </div>
     </tbody>
 </table>
+<div id="modal">
+</div>
