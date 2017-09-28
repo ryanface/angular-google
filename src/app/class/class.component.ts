@@ -36,7 +36,7 @@ export class ClassComponent implements OnInit {
       this.time = setInterval(()=>this.atualizar(),2000);
   }
   ngOnDestroy() {
-      this.subscription.unsubscribe();
+      if(this.subscription)this.subscription.unsubscribe();
   }
 
   //AUTENTICACAO __  LOAD COURSES

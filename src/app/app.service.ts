@@ -39,7 +39,7 @@ export class AppService implements OnInit {
             courseId: courseId
           }).then(response=> {    gapi.locallib.sendService( response.result );  });
       }catch(e){
-          this.google('getActivityDetail',{id:courseId});
+          this.checkLogin();
       }
     }
     //cand-detail
@@ -49,7 +49,7 @@ export class AppService implements OnInit {
           id: courseId
         }).then(response=> {    gapi.locallib.sendService( response.result );  });
       }catch(e){
-         this.google('getCardDetail',{id:courseId});
+         this.checkLogin();
       }
     }
 
@@ -97,7 +97,7 @@ export class AppService implements OnInit {
     public goRooms(){
         console.log('click:goRooms');
         if(gapi.client == undefined || gapi.client.classroom == undefined || gapi.client.classroom.courses == undefined){
-           gapi.route.navigate(['login']);
+           setTimeout(()=>gapi.route.navigate(['/login']),50);
         }else{
             gapi.client.classroom.courses.list({
               courseStates: 'ACTIVE',
@@ -115,75 +115,12 @@ export class AppService implements OnInit {
     getRooms(): Observable<Response> {
         return this.rooms.asObservable();
     }
-    //---
-    /*******************************API/CLIENT***********************************/
-    google(method='list',params={}): void {
-        console.log('google',params);
-        this.method   = method;
-        this.params   = params;
-        if(gapi.locallib != undefined){
-           this.call();
-        }else{
-           gapi.locallib = this;
-           gapi.load('client:auth2', this.initClient);
-        }
-    }
-    initClient(): void {
-          console.log('initClient');
-          gapi.client.init({
-            discoveryDocs: configuration.discoveryDocs,
-            clientId: configuration.clientId,
-            scope: configuration.scope
-          }).then( () => {
-            console.log('initClient . then');
-            gapi.auth2.getAuthInstance().isSignedIn.listen(gapi.locallib.updateSigninStatus);
-            gapi.locallib.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-          });
-    }
-    updateSigninStatus(isSignedIn):void {
-      console.log('updateSigninStatus');
-        if (isSignedIn) {
-          console.log('ok, logado;');
-          //gapi.locallib.call();
-          gapi.locallib.sendService( {'ok':'logado'} );
-        }else{
-           console.log('não logou;');
-           gapi.route.navigate(['login']);
-           if(gapi.locallib)
-             gapi.locallib.sendService( {api:'login_error'} );
-           //gapi.auth2.getAuthInstance().signIn();
-        }
-    }
-    call(){
-      console.log('call',gapi.locallib.method,gapi.locallib.params);
-      switch(gapi.locallib.method) {
-          case 'list':
-                gapi.client.classroom.courses.list({
-                  courseStates: 'ACTIVE',
-                  pageSize: 500
-                }).then(response=> { gapi.locallib.sendService( response.result.courses );  });
-              break;
-          case 'getCardDetail':
-                gapi.client.classroom.courses.get({
-                  id: gapi.locallib.params.id
-                }).then(response=> {    gapi.locallib.sendService( response.result );  });
-              break;
-          case 'getActivityDetail':
-                //console.log(gapi.client.classroom);
-                gapi.client.classroom.courses.courseWork.list({
-                  courseId: gapi.locallib.params.id
-                }).then(response=> {    gapi.locallib.sendService( response.result );  });
-              break;
-          default:
-              break;
-      }
-    }
     /*----------------------NEW--------------------------*/
     checkLogin():void{
         if(gapi.locallib){
            gapi.locallib.sendService( {'ok':'logado'} );
         }else{
-           gapi.route.navigate(['login']);
+           setTimeout(()=>gapi.route.navigate(['/login']),50);
         }
     }
     login():void{
@@ -204,7 +141,7 @@ export class AppService implements OnInit {
     loginStatus(isSignedIn):void{
         console.log('loginStatus',isSignedIn);
         if(isSignedIn){
-          gapi.route.navigate(['dashboard']);
+          setTimeout(()=>gapi.route.navigate(['/turmas']),50);
         }else{
           if(gapi.locallib)
             gapi.locallib.sendService( {api:'login_error'} );
@@ -214,10 +151,9 @@ export class AppService implements OnInit {
     loginEnd(isSignedIn):void{
         console.log('loginEnd',isSignedIn);
         if(!isSignedIn){
-
-          gapi.route.navigate(['login']);
+          setTimeout(()=>gapi.route.navigate(['/login']),50);
         }else
-          gapi.route.navigate(['dashboard']);
+          setTimeout(()=>gapi.route.navigate(['/turmas']),50);
     }
     logout(){
         gapi.auth2.getAuthInstance().signOut();

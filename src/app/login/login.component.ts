@@ -16,13 +16,10 @@ export class LoginComponent implements OnInit {
   AUTENTICATE:boolean = false;
   subscription: Subscription;
   spinner:any = {'class':'spinner','msg':''};
-  private time:any;
-  public count:number = 0;
 
   constructor( private AppService: AppService,
                private gd:GlobalDataService,
                private route: Router ) {
-                 this.time = setInterval(()=>this.atualizar(),1000);
   }
 
 
@@ -33,15 +30,6 @@ export class LoginComponent implements OnInit {
   }
   ngOnDestroy() {
       this.subscription.unsubscribe();
-      clearInterval(this.time);
-  }
-  public atualizar(){
-     this.count++;
-     console.log('AUTENTICATE',this.count,this.AUTENTICATE);
-     if(this.count > 10){
-         //clearInterval(this.time);
-         this.count = 0;
-     }
   }
   //AUTENTICACAO __  LOAD COURSES
   proccess(tmp:Response){
@@ -53,7 +41,7 @@ export class LoginComponent implements OnInit {
      }else{
          this.AUTENTICATE = true;
          //clearInterval(this.time);
-         this.route.navigate(['dashboard']);
+         setTimeout(()=>this.route.navigate(['/turmas']),50);
      }
   }
   autenticate(){

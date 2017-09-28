@@ -9,10 +9,12 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'app';
   currentChoice: string = "";
+  private time:any;
+  public count:number = 0;
 
   constructor(private router: Router) {
     router.events.subscribe((url:any) => this.follow(url));
-    //console.log(router.url);  // to print only path eg:"/login"
+    this.time = setInterval(()=>this.atualizar(),500);
   }
   ngOnInit() {
 
@@ -20,13 +22,19 @@ export class AppComponent {
   ngOnDestroy() {
 
   }
-
+  public atualizar(){
+     this.count++;
+     if(this.count > 10){
+         //clearInterval(this.time);
+         this.count = 0;
+     }
+  }
   follow(url:any){
      //console.log('follow',url);
      if(url.shouldActivate){
         let tmp:string = url.url;
         let tmp1:string[] = tmp.split('/');
-        this.setActive(tmp1[1]);
+        setTimeout(()=>this.setActive(tmp1[1]),500);
      }
   }
 
@@ -39,6 +47,6 @@ export class AppComponent {
       if(this.currentChoice == choice)
            return "active";
       else
-           return "not";
+           return undefined;
   }
 }
