@@ -136,7 +136,9 @@ export class AppService implements OnInit {
         }).then( () => {
           gapi.auth2.getAuthInstance().isSignedIn.listen(gapi.locallib.loginEnd);
           gapi.locallib.loginStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-        });
+        }, (a,b)=>{ console.log('loginError',a,b);
+           setTimeout(()=>gapi.route.navigate(['/login']),50);
+        } );
     }
     loginStatus(isSignedIn):void{
         console.log('loginStatus',isSignedIn);
@@ -145,7 +147,7 @@ export class AppService implements OnInit {
         }else{
           if(gapi.locallib)
             gapi.locallib.sendService( {api:'login_error'} );
-            gapi.auth2.getAuthInstance().signIn();
+            setTimeout(()=>gapi.auth2.getAuthInstance().signIn(),1000);
         }
     }
     loginEnd(isSignedIn):void{
