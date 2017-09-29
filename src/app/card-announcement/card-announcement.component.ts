@@ -4,44 +4,44 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { AppService } from "../app.service";
 
-
 @Component({
-  selector: 'activity-details-list',
-  templateUrl: './activity-details.component.html',
-  styleUrls: ['./activity-details.component.css']
+  selector: 'card-details-list',
+  templateUrl: './card-announcement.component.html',
+  styleUrls: ['./card-announcement.component.css']
 })
-export class ActivityDetailsComponent implements OnInit {
-    id: number;
-    private sub: any;
+export class CardAnnouncementComponent implements OnInit {
 
+    /*observer*/
+    private Announcement: Subscription;
+
+    public id: number;
+    private sub: any;
     LISTx:any;
     _COURSES:any[] = [];
-    _fields:any[] = [];
-
-    subscription: Subscription;
     spinner:any = {'class':'spinner','msg':'.'};
     term:string;
 
-  constructor(private route: ActivatedRoute, private AppService: AppService) { }
+  constructor(private route: ActivatedRoute, private AppService: AppService) {
+  }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => { this.id = +params['id']; this.go(); });
-    this.subscription = this.AppService.getService().subscribe((lista: Response) => { this.proccess(lista);  },(error) => console.log(error), );
+    this.Announcement = this.AppService.getAnnouncement().subscribe((lista: Response) => { this.proccess(lista); },(error) => { console.log(error); } );
   }
   ngOnDestroy() {
      if(this.sub)this.sub.unsubscribe();
-     if(this.subscription)this.subscription.unsubscribe();
-     this.AppService.clearService();
+     if(this.Announcement)this.Announcement.unsubscribe();
    }
    go():void{
-     this.AppService.getActivityDetail(this.id);
+     this.AppService.goAnnouncement(this.id);
    }
+   //AUTENTICACAO __  LOAD COURSES
    proccess(tmp:Response){
       console.log('proccess',tmp);
       this.LISTx = tmp;
       this._COURSES = this.LISTx;
 
-      this.subscription.unsubscribe();
+      this.Announcement.unsubscribe();
       this.AppService.clearService();
       this.clear();
    }
@@ -49,5 +49,4 @@ export class ActivityDetailsComponent implements OnInit {
       console.log('clear');
       this.spinner.msg = '';
    }
-
 }

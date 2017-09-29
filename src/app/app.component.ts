@@ -1,5 +1,6 @@
 import { OnInit, OnDestroy,Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppService } from "./app.service";
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,9 @@ export class AppComponent {
   currentChoice: string = "";
   private time:any;
   public count:number = 0;
+  public currentId:string = '0';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private AppService: AppService) {
     router.events.subscribe((url:any) => this.follow(url));
     this.time = setInterval(()=>this.atualizar(),500);
   }
@@ -30,23 +32,25 @@ export class AppComponent {
      }
   }
   follow(url:any){
-     //console.log('follow',url);
+     if(url.shouldActivate) console.log('follow',url);
      if(url.shouldActivate){
         let tmp:string = url.url;
         let tmp1:string[] = tmp.split('/');
+        this.currentId = tmp1[2];
         setTimeout(()=>this.setActive(tmp1[1]),500);
      }
   }
-
   setActive(choice: string): void{
       console.log('current menu',choice);
       this.currentChoice = choice;
   }
-
   getActive(choice: string) : string{
       if(this.currentChoice == choice)
            return "active";
       else
            return undefined;
+  }
+  logout(){
+      this.AppService.logout();
   }
 }

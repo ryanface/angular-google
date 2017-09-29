@@ -2,23 +2,22 @@
     <thead>
     </thead>
     <tbody>
-      <div *ngIf="json.name" class="row courseinfo">
+      <div *ngIf="!spinner.msg" class="row courseinfo">
           <div class="panel panel-default">
             <div class="panel-body">
               <h4> {{json.name}} - Materiais </h4>
             </div>
             <div class="panel-footer">
               <ul class="list-group">
-                  <a href="{{json.teacherFolder.alternateLink}}" target="_blank"><img [src]="Google_Drive_icon"></a>
+                  <a *ngIf="json.teacherFolder" href="{{json.teacherFolder.alternateLink}}" target="_blank"><img [src]="Google_Drive_icon"></a>
                   <a href="{{json.alternateLink}}" target="_blank"><img [src]="Google_Classroom_icon"></a>
-                  <a [routerLink]="['/activity-details', json.id]"><img [src]="Google_Activity_icon"></a>
                   <a (click)="open_modal()"><img [src]="Google_Group_icon" style="width: 41px;"></a>
               </ul>
               <ul *ngIf="activate" class="list-group">
                 <li class="list-group-item">
                   <ul class="list-group">
                      <li class="list-group-item">
-                        <input *ngIf="_AUTENTICATE" type="text" [(ngModel)]="term" (keyup)="pesquisar()">
+                        <input type="text" [(ngModel)]="term" (keyup)="pesquisar()">
                         <img [src]="Google_Close_icon" (click)="close()" class="icon_close">
                      </li>
                   </ul>

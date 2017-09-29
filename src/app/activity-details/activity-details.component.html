@@ -11,12 +11,12 @@
               <div *ngIf="spinner.msg" class="alert alert-success">
                   <div class="{{spinner.class}}">{{spinner.msg}}</div>
               </div>
-              <app-filter-list [json]="_COURSES" [courseId]="id" [_AUTENTICATE]="_AUTENTICATE" [spinner]="spinner"></app-filter-list>
+              <app-filter-list [json]="_COURSES" [courseId]="id" [spinner]="spinner"></app-filter-list>
           </tbody>
       </table>
   </div>
   <div class="col-md-2">
-    <button (click)="autenticate()" *ngIf="!_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logar</button>
-    <button (click)="logout()" *ngIf="_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>
+    <!-- button (click)="autenticate()" *ngIf="!_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logar</button>
+    <button (click)="logout()" *ngIf="_AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button -->
   </div>
 </div>

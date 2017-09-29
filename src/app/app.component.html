@@ -1,15 +1,21 @@
 <div style="text-align:center">
-  <!---img [src]="fullImagePath" >
-  <img [src]="fullImagePath2" width="10%" -->
 </div>
 <nav class="navbar navbar-inverse navbar-custom">
   <div class="container-fluid">
       <ul class="nav navbar-nav">
-        <li (click)="setActive('login')" class="{{getActive('login')}}"><a [routerLink]="'login'">Login<span class="sr-only">(current)</span></a></li>
-        <li (click)="setActive('dashboard')" class="{{getActive('dashboard')}}"><a [routerLink]="'dashboard'">Dashboard<span class="sr-only">(current)</span></a></li>
-        <li (click)="setActive('turmas')" class="{{getActive('turmas')}}"><a [routerLink]="'turmas'">Turmas<span class="sr-only">(current)</span></a></li>
-        <li *ngIf="getActive('card-details')" class="{{getActive('card-details')}}"><a href="#">Materiais<span class="sr-only">(current)</span></a></li>
-        <li *ngIf="getActive('activity-details')" class="{{getActive('activity-details')}}"><a href="#">Atividades<span class="sr-only">(current)</span></a></li>
+        <li *ngIf="getActive('login')" (click)="setActive('login')" class="{{getActive('login')}}"><a [routerLink]="'login'">Login<span class="sr-only">(current)</span></a></li>
+        <li *ngIf="!getActive('login')" (click)="logout()" class=""><a [routerLink]="'login'">Logout<span class="sr-only">(current)</span></a></li>
+        <li *ngIf="!getActive('login')" (click)="setActive('dashboard')" class="{{getActive('dashboard')}}"><a [routerLink]="'dashboard'">Dashboard<span class="sr-only">(current)</span></a></li>
+        <li *ngIf="!getActive('login')" (click)="setActive('turmas')" class="{{getActive('turmas')}}"><a [routerLink]="'turmas'">Turmas<span class="sr-only">(current)</span></a></li>
+
+      <ng-container *ngIf="currentId">
+        <li class="active"><a [routerLink]="['card-details',currentId]">Turma({{currentId}})<span class="sr-only">(current)</span></a></li>
+
+        <li class="{{getActive('card-details')}}">     <a [routerLink]="['card-details',currentId]">Materiais<span class="sr-only">(current)</span></a></li>
+        <li class="{{getActive('activity-details')}}"> <a [routerLink]="['activity-details',currentId]">Atividades<span class="sr-only">(current)</span></a></li>
+        <li class="{{getActive('card-announcement')}}"><a [routerLink]="['card-announcement',currentId]">Avisos<span class="sr-only">(current)</span></a></li>
+      </ng-container>
+
         <input type="hidden" name="count" value="{{count}}">
       </ul>
   </div>

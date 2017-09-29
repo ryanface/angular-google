@@ -34,8 +34,6 @@ export class FilterListComponent implements OnInit {
   @Input()
     json: any = [];
   @Input()
-    _AUTENTICATE: boolean = false;
-  @Input()
     spinner:any = {'class':'spinner','msg':'.'};
   @Input()
     courseId:number;

@@ -29,20 +29,22 @@ export class LoginComponent implements OnInit {
 
   }
   ngOnDestroy() {
-      this.subscription.unsubscribe();
+      if(this.subscription)this.subscription.unsubscribe();
   }
   //AUTENTICACAO __  LOAD COURSES
   proccess(tmp:Response){
-     console.log('proccess',tmp);
-     if(tmp['api']){
-         console.log("api",tmp);
-         this.spinner.class = '';
-         this.spinner.msg = 'Erro ao logar, verifique as permissões de Pop-up.';
-     }else{
-         this.AUTENTICATE = true;
-         //clearInterval(this.time);
-         setTimeout(()=>this.route.navigate(['/turmas']),50);
-     }
+    console.log('proccess',tmp);
+    if(tmp){
+       if(tmp['api']){
+           console.log("api",tmp);
+           this.spinner.class = '';
+           this.spinner.msg = 'Erro ao logar, verifique as permissões de Pop-up.';
+       }else{
+           this.AUTENTICATE = true;
+           //clearInterval(this.time);
+           setTimeout(()=>this.route.navigate(['/turmas']),50);
+       }
+    }
   }
   autenticate(){
        this.AppService.login();

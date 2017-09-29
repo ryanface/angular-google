@@ -7,6 +7,7 @@ import { LoadingModule } from './loading/loading.module';
 import { ClassModule } from './class/class.module';
 import { CardDetailsModule } from './card-details/card-details.module';
 import { ActivityDetailsModule } from './activity-details/activity-details.module';
+import { CardAnnouncementModule } from './card-announcement/card-announcement.module';
 import { GlobalDataService } from './globaldata.service';
 import { AppService } from "./app.service";
 import { LoginModule } from './login/login.module';
@@ -24,6 +25,7 @@ import { LoginModule } from './login/login.module';
     CardDetailsModule,
     ActivityDetailsModule,
     LoginModule,
+    CardAnnouncementModule,
   ],
   providers: [GlobalDataService,AppService],
   bootstrap: [AppComponent]

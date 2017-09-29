@@ -19,6 +19,7 @@ export class AppService implements OnInit {
     private activity = new Subject<Response>();
     private enrols = new Subject<Response>();
     private rooms = new Subject<Response>();
+    private announcement = new Subject<Response>();
 
     _LOGIN:boolean = false;
     public params:any;
@@ -47,7 +48,8 @@ export class AppService implements OnInit {
       try{
         gapi.client.classroom.courses.get({
           id: courseId
-        }).then(response=> {    gapi.locallib.sendService( response.result );  });
+        }).then(response=> {    gapi.locallib.sendService( response.result );  },
+                (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
       }catch(e){
          this.checkLogin();
       }
@@ -61,7 +63,8 @@ export class AppService implements OnInit {
         gapi.client.classroom.courses.courseWork.studentSubmissions.list({
           courseId: CourseWork[i].courseid,
           courseWorkId:CourseWork[i].courseworkid
-        }).then(response=> { console.log('return:goActivities=>'+i);  this.sendActivities( response.result.studentSubmissions );  });
+        }).then(response=> { console.log('return:goActivities=>'+i);  this.sendActivities( response.result.studentSubmissions );  },
+                (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
       }
     }
     sendActivities(message: Response) {
@@ -80,7 +83,8 @@ export class AppService implements OnInit {
         console.log('click:goEnrols',courseId);
         gapi.client.classroom.courses.students.list({
            courseId:courseId
-        }).then(response=> { console.log('return:goEnrols=>');  this.sendEnrols( response.result.students );  });
+        }).then(response=> { console.log('return:goEnrols=>');  this.sendEnrols( response.result.students );  },
+                (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
     }
     sendEnrols(message: Response) {
         console.log('return:sendEnrols',message);
@@ -96,13 +100,14 @@ export class AppService implements OnInit {
     //--- class
     public goRooms(){
         console.log('click:goRooms');
-        if(gapi.client == undefined || gapi.client.classroom == undefined || gapi.client.classroom.courses == undefined){
-           setTimeout(()=>gapi.route.navigate(['/login']),50);
-        }else{
+        try{
             gapi.client.classroom.courses.list({
               courseStates: 'ACTIVE',
               pageSize: 500
-            }).then(response=> { gapi.locallib.sendRooms( response.result.courses );  });
+            }).then(response=> { gapi.locallib.sendRooms( response.result.courses );  },
+                    (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
+        }catch(e){
+          setTimeout(()=>gapi.route.navigate(['/login']),50);
         }
     }
     sendRooms(message: Response) {
@@ -115,6 +120,29 @@ export class AppService implements OnInit {
     getRooms(): Observable<Response> {
         return this.rooms.asObservable();
     }
+    //--- class / cards / announcement
+    public goAnnouncement(courseId:number){
+      try{
+        console.log('click:goAnnouncement',courseId,gapi.client.classroom);
+        gapi.client.classroom.courses.announcements.list({
+           courseId:courseId
+        }).then(response=> { console.log('return:goAnnouncement=>');  this.sendAnnouncement( response.result.announcements );  },
+                (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
+      }catch(e){
+        setTimeout(()=>gapi.route.navigate(['/login']),50);
+      }
+    }
+    public sendAnnouncement(message: Response) {
+        console.log('return:sendAnnouncement',message);
+        this.announcement.next(message);
+    }
+    public clearAnnouncement() {
+        this.announcement.next();
+    }
+    public getAnnouncement(): Observable<Response> {
+        return this.announcement.asObservable();
+    }
+    //---
     /*----------------------NEW--------------------------*/
     checkLogin():void{
         if(gapi.locallib){
@@ -134,10 +162,9 @@ export class AppService implements OnInit {
           clientId: configuration.clientId,
           scope: configuration.scope
         }).then( () => {
-          gapi.auth2.getAuthInstance().isSignedIn.listen(gapi.locallib.loginEnd);
-          gapi.locallib.loginStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-        }, (a,b)=>{ console.log('loginError',a,b);
-           setTimeout(()=>gapi.route.navigate(['/login']),50);
+                  gapi.auth2.getAuthInstance().isSignedIn.listen(gapi.locallib.loginEnd);
+                  gapi.locallib.loginStatus(gapi.auth2.getAuthInstance().isSignedIn.get());  },
+                (error) => { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50);
         } );
     }
     loginStatus(isSignedIn):void{

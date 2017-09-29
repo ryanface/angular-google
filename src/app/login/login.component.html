@@ -10,11 +10,13 @@
               <div *ngIf="spinner.msg" class="alert alert-success">
                   <div class="{{spinner.class}}">{{spinner.msg}}</div>
               </div>
+            <div *ngIf="!spinner.msg" class="alert alert-success">  
+              <button (click)="autenticate()" *ngIf="!AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logar</button>
+              <button (click)="logout()" *ngIf="AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>
+            </div>
           </tbody>
       </table>
   </div>
   <div class="col-md-2">
-    <button (click)="autenticate()" *ngIf="!AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logar</button>
-    <button (click)="logout()" *ngIf="AUTENTICATE" class='.btn-default' type="button" class="btn btn-default">Logout</button>
   </div>
 </div>
