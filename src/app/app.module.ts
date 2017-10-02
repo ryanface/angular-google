@@ -8,6 +8,7 @@ import { ClassModule } from './class/class.module';
 import { CardDetailsModule } from './card-details/card-details.module';
 import { ActivityDetailsModule } from './activity-details/activity-details.module';
 import { CardAnnouncementModule } from './card-announcement/card-announcement.module';
+import { CardStudentsModule } from './card-students/card-students.module';
 import { GlobalDataService } from './globaldata.service';
 import { AppService } from "./app.service";
 import { LoginModule } from './login/login.module';
@@ -26,6 +27,7 @@ import { LoginModule } from './login/login.module';
     ActivityDetailsModule,
     LoginModule,
     CardAnnouncementModule,
+    CardStudentsModule,
   ],
   providers: [GlobalDataService,AppService],
   bootstrap: [AppComponent]

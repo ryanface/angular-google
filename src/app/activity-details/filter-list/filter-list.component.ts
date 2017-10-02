@@ -73,7 +73,7 @@ export class FilterListComponent implements OnInit {
                 if(lista[work].assignmentSubmission!= undefined){
                   if(lista[work].assignmentSubmission.attachments != undefined){
                      let attachments = lista[work].assignmentSubmission.attachments;
-                     usersList += '<img src="'+this.enrolsList[lista[work].userId].photoUrl+'" width="10%">';
+                     usersList += '<img src="'+this.enrolsList[lista[work].userId].photoUrl+'" width="5%">';
                     for(let i in attachments){
                        if(attachments[i].driveFile != undefined)
                           usersList += '<img src="'+attachments[i].driveFile.thumbnailUrl+'" width="10%"><a href="'+attachments[i].driveFile.alternateLink+'" target="_blank"> Arquivo:'+attachments[i].driveFile.title+'</a>';

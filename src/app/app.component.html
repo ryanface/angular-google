@@ -9,11 +9,12 @@
         <li *ngIf="!getActive('login')" (click)="setActive('turmas')" class="{{getActive('turmas')}}"><a [routerLink]="'turmas'">Turmas<span class="sr-only">(current)</span></a></li>
 
       <ng-container *ngIf="currentId">
-        <li class="active"><a [routerLink]="['card-details',currentId]">Turma({{currentId}})<span class="sr-only">(current)</span></a></li>
+        <li class="active"><a [routerLink]="['card-details',currentId]">Turma({{currentUrl}})<span class="sr-only">(current)</span></a></li>
 
         <li class="{{getActive('card-details')}}">     <a [routerLink]="['card-details',currentId]">Materiais<span class="sr-only">(current)</span></a></li>
         <li class="{{getActive('activity-details')}}"> <a [routerLink]="['activity-details',currentId]">Atividades<span class="sr-only">(current)</span></a></li>
         <li class="{{getActive('card-announcement')}}"><a [routerLink]="['card-announcement',currentId]">Avisos<span class="sr-only">(current)</span></a></li>
+        <li class="{{getActive('card-students')}}">    <a [routerLink]="['card-students',currentId]">Alunos<span class="sr-only">(current)</span></a></li>
       </ng-container>
 
         <input type="hidden" name="count" value="{{count}}">

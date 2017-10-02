@@ -5,6 +5,7 @@ import { Response } from '@angular/http';
 import { AppService } from "../../app.service";
 import { Subscription } from 'rxjs/Subscription';
 import { ListCourseWork } from '../../listCourseWork.type';
+import { GlobalDataService } from '../../globaldata.service';
 
 @Component({
   selector: 'cards-list',
@@ -26,7 +27,7 @@ export class CardsComponent implements OnInit {
   @Input()
   json: any[] = [];
 
-  constructor(private AppService: AppService) { }
+  constructor(private AppService: AppService, private gd:GlobalDataService) { }
 
   ngOnInit() {
   }
@@ -68,6 +69,12 @@ export class CardsComponent implements OnInit {
       });
       this.modal.setContent(html);
       this.modal.open();
+  }
+  public choice(url:string,list:any){
+       console.log('choice list:',list);
+       this.gd.nav.currentData = list;
+       this.gd.nav.currentClick = url;
+       this.gd.proccess();
   }
   pesquisar(){
 

@@ -81,10 +81,14 @@ export class AppService implements OnInit {
     //--- class / cards
     public goEnrols(courseId:number){
         console.log('click:goEnrols',courseId);
-        gapi.client.classroom.courses.students.list({
-           courseId:courseId
-        }).then(response=> { console.log('return:goEnrols=>');  this.sendEnrols( response.result.students );  },
-                (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
+        try{
+            gapi.client.classroom.courses.students.list({
+               courseId:courseId
+            }).then(response=> { console.log('return:goEnrols=>');  this.sendEnrols( response.result.students );  },
+                    (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
+        }catch(e){
+            setTimeout(()=>gapi.route.navigate(['/login']),50);
+        }
     }
     sendEnrols(message: Response) {
         console.log('return:sendEnrols',message);

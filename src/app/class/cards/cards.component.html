@@ -6,20 +6,18 @@
             <div class="panel panel-default">
               <div class="panel-body">
                 <h4>
-                    <a [routerLink]="['/card-details', list[0]]" [queryParams]="_COURSES">{{list[1]}}</a>
-                    <small class="shortname">{{list[2]}}</small>
+                    <a [routerLink]="['/card-details', list.id]" (click)="choice('card-details',list)">{{list.name}}</a>
+                    <small class="shortname">{{list.descriptionHeading}}</small>
                 </h4>
               </div>
               <div class="panel-footer">
-                <a *ngIf="list[4]" href="{{list[4]}}" target="_blank"><img [src]="Google_Drive_icon"></a>
-                <a href="{{list[3]}}" target="_blank"><img [src]="Google_Classroom_icon"></a>
-                <a [routerLink]="['/activity-details', list[0]]"><img [src]="Google_Activity_icon"></a>
-                <!--a (click)="open_modal(list[0])"><img [src]="Google_Group_icon" style="width: 41px;"></a-->
+                <a *ngIf="list.folder" href="{{list.folder}}" target="_blank"><img [src]="Google_Drive_icon"></a>
+                <a href="{{list.alternateLink}}" target="_blank"><img [src]="Google_Classroom_icon"></a>
+                <a [routerLink]="['/activity-details', list.id]" (click)="choice('activity-details',list)"><img [src]="Google_Activity_icon"></a>
               </div>
             </div>
         </div>
       </tr>
     </tbody>
 </table>
-<div id="modal">
-</div>
+<div id="modal"></div>

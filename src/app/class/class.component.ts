@@ -37,8 +37,9 @@ export class ClassComponent implements OnInit {
      if(tmp){
          let _fields = ['Id','Sala','Código'];
          for(let i in tmp){
-            let folder = (tmp[i].teacherFolder)?tmp[i].teacherFolder.alternateLink:'';
-            this.LISTx.push([tmp[i].id,tmp[i].name,tmp[i].descriptionHeading,tmp[i].alternateLink,folder]);
+            tmp[i].folder = (tmp[i].teacherFolder)?tmp[i].teacherFolder.alternateLink:'';
+            //this.LISTx.push([tmp[i].id,tmp[i].name,tmp[i].descriptionHeading,tmp[i].alternateLink,folder]);
+            this.LISTx.push(tmp[i]);
          }
          this._COURSES = this.LISTx;
 
@@ -55,8 +56,8 @@ export class ClassComponent implements OnInit {
       console.log(this.term);
       let tmp:any[] = [];
       for(let i in this.LISTx){
-         if(this.LISTx[i][2] == undefined) this.LISTx[i][2] = '';
-         if((this.LISTx[i][1].toUpperCase().indexOf(this.term.toUpperCase()) != -1) || (this.LISTx[i][2].toUpperCase().indexOf(this.term.toUpperCase()) != -1))
+         if(this.LISTx[i].descriptionHeading == undefined) this.LISTx[i].descriptionHeading = '';
+         if((this.LISTx[i].name.toUpperCase().indexOf(this.term.toUpperCase()) != -1) || (this.LISTx[i].descriptionHeading.toUpperCase().indexOf(this.term.toUpperCase()) != -1))
            tmp.push(this.LISTx[i]);
       }
       this._COURSES = tmp;

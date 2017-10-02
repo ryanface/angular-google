@@ -1,6 +1,7 @@
 import { OnInit, OnDestroy,Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from "./app.service";
+import { GlobalDataService } from './globaldata.service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,13 @@ export class AppComponent {
   private time:any;
   public count:number = 0;
   public currentId:string = '0';
+  public currentUrl:string = '#';
 
-  constructor(private router: Router, private AppService: AppService) {
+  constructor(private router: Router
+             ,private AppService: AppService
+             ,private gd:GlobalDataService) {
     router.events.subscribe((url:any) => this.follow(url));
-    this.time = setInterval(()=>this.atualizar(),500);
+    this.time = setInterval(()=>this.atualizar(),1000);
   }
   ngOnInit() {
 
@@ -36,7 +40,10 @@ export class AppComponent {
      if(url.shouldActivate){
         let tmp:string = url.url;
         let tmp1:string[] = tmp.split('/');
-        this.currentId = tmp1[2];
+
+        this.currentId  = (!this.gd.get('currentData')) ? undefined : this.gd.get('currentData').id;
+        this.currentUrl = (!this.gd.get('currentData')) ? undefined : this.gd.get('currentData').descriptionHeading;
+
         setTimeout(()=>this.setActive(tmp1[1]),500);
      }
   }

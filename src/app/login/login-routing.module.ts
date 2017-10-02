@@ -6,7 +6,7 @@ import { LoginComponent } from "./login.component";
   imports:[
     RouterModule.forChild([
       { path: 'login', component: LoginComponent },
-      { path: '', component: LoginComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
     ])
   ],
   exports:[

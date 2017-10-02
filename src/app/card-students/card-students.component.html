@@ -5,13 +5,13 @@
   <div class="col-md-8 col-centered">
       <table class="table table-striped">
           <thead>
-            <input *ngIf="!spinner.msg" type="text" [(ngModel)]="term" (keyup)="pesquisar()">
+             <input *ngIf="!spinner.msg" type="text" [(ngModel)]="term" (keyup)="pesquisar()">
           </thead>
           <tbody>
               <div *ngIf="spinner.msg" class="alert alert-success">
                   <div class="{{spinner.class}}">{{spinner.msg}}</div>
               </div>
-              <app-filter-list [json]="_COURSES" [courseId]="id" [spinner]="spinner"></app-filter-list>
+              <app-filter-list [json]="filterList" [courseId]="id" [spinner]="spinner"></app-filter-list>
           </tbody>
       </table>
   </div>

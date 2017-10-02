@@ -45,6 +45,18 @@ export class CardAnnouncementComponent implements OnInit {
       this.AppService.clearService();
       this.clear();
    }
+   pesquisar(){
+       console.log(this.term);
+       let tmp:any[] = [];
+       for(let i in this.LISTx){
+          if(this.LISTx[i].text == undefined) this.LISTx[i].text = '';
+
+          if((this.LISTx[i].text.toUpperCase().indexOf(this.term.toUpperCase()) != -1)){
+            tmp.push(this.LISTx[i]);
+          }  
+       }
+       this._COURSES = tmp;
+   }
    clear(){
       console.log('clear');
       this.spinner.msg = '';
