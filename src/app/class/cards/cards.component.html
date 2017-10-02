@@ -14,6 +14,7 @@
                 <a *ngIf="list.folder" href="{{list.folder}}" target="_blank"><img [src]="Google_Drive_icon"></a>
                 <a href="{{list.alternateLink}}" target="_blank"><img [src]="Google_Classroom_icon"></a>
                 <a [routerLink]="['/activity-details', list.id]" (click)="choice('activity-details',list)"><img [src]="Google_Activity_icon"></a>
+                <a [routerLink]="['/card-students', list.id]" (click)="choice('card-students',list)"><img [src]="Google_Group_icon" style="width: 41px;"></a>
               </div>
             </div>
         </div>

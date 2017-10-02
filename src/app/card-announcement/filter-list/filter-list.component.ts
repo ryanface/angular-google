@@ -11,8 +11,10 @@ import { AppService } from "../../app.service";
 })
 export class FilterListComponent implements OnInit {
 
-  public Google_Answer_icon   = './assets/Google_Answer_icon.png';
-  public Google_Tarefa_icon   = './assets/Google_Tarefa_icon.png';
+  public Google_Answer_icon    = './assets/Google_Answer_icon.png';
+  public Google_Tarefa_icon    = './assets/Google_Tarefa_icon.png';
+  public Google_Open_icon      = './assets/Google_Open_icon.png';
+  public Google_Classroom_icon = './assets/Google_Classroom_icon.png';
 
   /*enrols*/
   private modal:any;

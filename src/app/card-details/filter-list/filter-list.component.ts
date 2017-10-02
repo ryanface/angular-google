@@ -11,12 +11,13 @@ import { AppService } from "../../app.service";
 })
 export class FilterListComponent implements OnInit {
 
-  Google_Drive_icon     = './assets/Google_Drive_icon.png';
-  Google_Classroom_icon = './assets/Google_Classroom_icon.png';
-  Google_Activity_icon  = './assets/Google_Activity_icon.png';
-  Google_Group_icon     = './assets/Google_Group_icon.ico';
-  Google_Close_icon     = './assets/Google_Close_icon.ico';
-  Google_Log_icon       = './assets/Google_Log_icon.png';
+  public Google_Drive_icon     = './assets/Google_Drive_icon.png';
+  public Google_Classroom_icon = './assets/Google_Classroom_icon.png';
+  public Google_Activity_icon  = './assets/Google_Activity_icon.png';
+  public Google_Group_icon     = './assets/Google_Group_icon.ico';
+  public Google_Close_icon     = './assets/Google_Close_icon.ico';
+  public Google_Log_icon       = './assets/Google_Log_icon.png';
+  public Google_Tarefa_icon    = './assets/Google_Tarefa_icon.png';
 
   /*enrols*/
   private modal:any;

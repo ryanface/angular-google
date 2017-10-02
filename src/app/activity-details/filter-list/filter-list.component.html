@@ -20,29 +20,41 @@
                             <ng-container *ngSwitchCase="'SHORT_ANSWER_QUESTION'"><img [src]="Google_Question_icon"></ng-container>
                             <ng-container *ngSwitchCase="'MULTIPLE_CHOICE_QUESTION'"><img [src]="Google_Question_icon"></ng-container>
                            </ng-container>
-                           <a *ngIf="li.title" href="{{li.alternateLink}}" target="_blank">{{li.title}}</a>
+                           {{li.title}}
                            <ul class="list-group">
                                <ng-container *ngFor="let materials of li.materials">
                                    <li class="list-group-item" *ngIf="materials.driveFile">
-                                       <a href="{{materials.driveFile.driveFile.alternateLink}}" target="_blank">
-                                            <img src="{{materials.driveFile.driveFile.thumbnailUrl}}" width="10%">
-                                            {{materials.driveFile.driveFile.title | slice:0:60}}
-                                       </a>
+                                        <img src="{{materials.driveFile.driveFile.thumbnailUrl}}" width="10%">
+                                        {{materials.driveFile.driveFile.title | slice:0:60}}
+                                        <div class="answer">
+                                          <a href="{{materials.driveFile.driveFile.alternateLink}}" target="_blank">
+                                            <img [src]="Google_Classroom_icon" style="width:40px;">
+                                          </a>
+                                        </div>
                                    </li>
                                    <li class="list-group-item" *ngIf="materials.youtubeVideo">
-                                       <a href="{{materials.youtubeVideo.alternateLink}}" target="_blank">
-                                            <img src="{{materials.youtubeVideo.thumbnailUrl}}" width="15%">
-                                            {{materials.youtubeVideo.title | slice:0:60}}
-                                       </a>
+                                        <img src="{{materials.youtubeVideo.thumbnailUrl}}" width="15%">
+                                        {{materials.youtubeVideo.title | slice:0:60}}
+                                        <div class="answer">
+                                          <a href="{{materials.youtubeVideo.alternateLink}}" target="_blank">
+                                            <img [src]="Google_Classroom_icon" style="width:40px;">
+                                          </a>
+                                        </div>
                                    </li>
                                    <li class="list-group-item" *ngIf="materials.link">
-                                       <a href="{{materials.link.url}}" target="_blank">
-                                            <img src="{{materials.link.thumbnailUrl}}" width="15%">
-                                            {{materials.link.title | slice:0:60}}
-                                       </a>
+                                        <img src="{{materials.link.thumbnailUrl}}" width="15%">
+                                        {{materials.link.title | slice:0:60}}
+                                        <div class="answer">
+                                          <a href="{{materials.link.url}}" target="_blank">
+                                            <img [src]="Google_Classroom_icon" style="width:40px;">
+                                          </a>
+                                        </div>
                                    </li>
                                </ng-container>
                                <div class="answer">
+                                 <a *ngIf="li.title" href="{{li.alternateLink}}" target="_blank">
+                                    <img [src]="Google_Classroom_icon" style="width:40px;">
+                                 </a>
                                  <img [src]="Google_Answer_icon" (click)="open_modal(li.id)">
                               </div>
                               <div class="spacer"></div>

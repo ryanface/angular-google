@@ -20,6 +20,7 @@ export class FilterListComponent implements OnInit {
   public Google_Question_icon = './assets/Google_Question_icon.png';
   public Google_Tarefa_icon   = './assets/Google_Tarefa_icon.png';
   public Google_Answer_icon   = './assets/Google_Answer_icon.png';
+  public Google_Classroom_icon = './assets/Google_Classroom_icon.png';
 
   public term:string;
 

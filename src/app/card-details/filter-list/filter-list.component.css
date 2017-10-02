@@ -1,7 +1,13 @@
-.icon_close{
-   width: 35px;
-   float:right;
-   margin-top: -5px;
+.answer{
+   margin-top: 55px;
+   float: right;
+}
+.spacer{
+   clear: both;
+}
+.list-group{
+   margin-bottom:0px;
+   margin-top:5px;
 }
 .courseinfo {
     position: relative;

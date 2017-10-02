@@ -9,15 +9,15 @@
                 <h4> Avisos </h4>
               </div>
               <div class="panel-footer">
-                  <ul class="list-group">                      
+                  <ul class="list-group">
                   </ul>
                   <ul *ngIf="json" class="list-group">
                       <li *ngFor="let li of json" class="list-group-item">
                           <img [src]="Google_Tarefa_icon">
-
-                           <a *ngIf="li.text" href="{{li.alternateLink}}" target="_blank">{{li.text}}</a>
-                           <ul *ngIf="li.materials" class="list-group">
-                               <ng-container *ngFor="let materials of li.materials">
+                           {{li.text}}
+                           <ul class="list-group">
+                              <ng-container *ngIf="li.materials">
+                                <ng-container *ngFor="let materials of li.materials">
                                    <li class="list-group-item" *ngIf="materials.driveFile">
                                        <a href="{{materials.driveFile.driveFile.alternateLink}}" target="_blank">
                                             <img src="{{materials.driveFile.driveFile.thumbnailUrl}}" width="10%">
@@ -36,11 +36,14 @@
                                             {{materials.link.title | slice:0:60}}
                                        </a>
                                    </li>
-                               </ng-container>
-                               <!--div class="answer">
-                                 <img [src]="Google_Answer_icon" (click)="open_modal(li.id)">
+                                </ng-container>
+                              </ng-container>
+                               <div class="answer">
+                                 <a *ngIf="li.text" href="{{li.alternateLink}}" target="_blank">
+                                    <img [src]="Google_Classroom_icon" width="80%">
+                                  </a>
                               </div>
-                              <div class="spacer"></div-->
+                              <div class="spacer"></div>
                            </ul>
                       </li>
                  </ul>
