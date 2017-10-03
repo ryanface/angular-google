@@ -1,5 +1,14 @@
+.row{
+ margin-right: 0px !important;
+ margin-left: 0px !important;
+}
+.shortname{
+    margin-top: 25px;
+    font-size: 0.8em;
+    position: absolute;
+}
 .answer{
-   margin-top: 15px;
+   margin-top:5px;
    float: right;
 }
 .spacer{
@@ -29,25 +38,4 @@
 }
 .panel-body {
     padding: 35px;
-}
-.Y93Wzb {
-    -webkit-align-items: center;
-    align-items: center;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-shrink: 0;
-    flex-shrink: 0;
-    height: 5.6rem;
-    -webkit-justify-content: center;
-    justify-content: center;
-    width: 5.6rem;
-}
-.gMIble{
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zd…oiLz48cGF0aCBmaWxsPSJub25lIiBkPSJNNDkgMTg1SDI1djI0aDI0eiIvPjwvZz48L3N2Zz4=);
-    background-repeat: no-repeat;
-    background-size: 10.5rem,121.4rem;
-    flex-shrink: 0;
 }

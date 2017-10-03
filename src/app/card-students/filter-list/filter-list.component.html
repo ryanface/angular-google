@@ -12,8 +12,13 @@
                   <ul *ngIf="json" class="list-group">
                     <li *ngFor="let user of json" class="list-group-item">
                        <img src="{{user.photoUrl}}" width="5%">{{user.name.fullName}}
-                       <small class="shortname" style="float: right;margin-top: 15px">{{user.emailAddress}}</small>
-                       <a (click)="open_logs(user)"><img [src]="Google_Log_icon" style="width: 41px;"></a>
+                       <small class="shortname">{{user.emailAddress}}</small>
+                       <ul class="list-group">
+                          <a (click)="open_logs(user)" class="answer">
+                              <img [src]="Google_Log_icon" width="80%">
+                          </a>
+                          <div class="spacer"></div>
+                       </ul>
                     </li>
                  </ul>
                  <ul *ngIf="!json[0] && !spinner.msg" class="list-group">

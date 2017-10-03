@@ -1,5 +1,14 @@
+.row{
+ margin-right: 0px !important;
+ margin-left: 0px !important;
+}
+.shortname{
+    margin-top: 25px;
+    font-size: 0.8em;
+    position: absolute;
+}
 .answer{
-   margin-top: 15px;
+   /*margin-top: 15px;*/
    float: right;
 }
 .spacer{

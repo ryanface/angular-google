@@ -24,31 +24,22 @@
                            <ul class="list-group">
                                <ng-container *ngFor="let materials of li.materials">
                                    <li class="list-group-item" *ngIf="materials.driveFile">
-                                        <img src="{{materials.driveFile.driveFile.thumbnailUrl}}" width="10%">
-                                        {{materials.driveFile.driveFile.title | slice:0:60}}
-                                        <div class="answer">
-                                          <a href="{{materials.driveFile.driveFile.alternateLink}}" target="_blank">
-                                            <img [src]="Google_Classroom_icon" style="width:40px;">
-                                          </a>
-                                        </div>
+                                        <img src="{{materials.driveFile.driveFile.thumbnailUrl}}" width="5%">
+                                        <a href="{{materials.driveFile.driveFile.alternateLink}}" target="_blank">
+                                          {{materials.driveFile.driveFile.title | slice:0:60}}
+                                        </a>
                                    </li>
                                    <li class="list-group-item" *ngIf="materials.youtubeVideo">
-                                        <img src="{{materials.youtubeVideo.thumbnailUrl}}" width="15%">
-                                        {{materials.youtubeVideo.title | slice:0:60}}
-                                        <div class="answer">
-                                          <a href="{{materials.youtubeVideo.alternateLink}}" target="_blank">
-                                            <img [src]="Google_Classroom_icon" style="width:40px;">
-                                          </a>
-                                        </div>
+                                        <img src="{{materials.youtubeVideo.thumbnailUrl}}" width="5%">
+                                        <a href="{{materials.youtubeVideo.alternateLink}}" target="_blank">
+                                          {{materials.youtubeVideo.title | slice:0:60}}
+                                        </a>
                                    </li>
                                    <li class="list-group-item" *ngIf="materials.link">
-                                        <img src="{{materials.link.thumbnailUrl}}" width="15%">
-                                        {{materials.link.title | slice:0:60}}
-                                        <div class="answer">
-                                          <a href="{{materials.link.url}}" target="_blank">
-                                            <img [src]="Google_Classroom_icon" style="width:40px;">
-                                          </a>
-                                        </div>
+                                        <img src="{{materials.link.thumbnailUrl}}" width="5%">
+                                        <a href="{{materials.link.url}}" target="_blank">
+                                          {{materials.link.title | slice:0:60}}
+                                        </a>
                                    </li>
                                </ng-container>
                                <div class="answer">
@@ -57,6 +48,7 @@
                                  </a>
                                  <img [src]="Google_Answer_icon" (click)="open_modal(li.id)">
                               </div>
+                              <small class="shortname">{{li.updateTime | slice:0:10}} {{li.updateTime | slice:11:19}}</small>
                               <div class="spacer"></div>
                            </ul>
                       </li>

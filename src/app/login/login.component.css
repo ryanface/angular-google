@@ -1,3 +1,7 @@
+.row{
+ margin-right: 0px !important;
+ margin-left: 0px !important;
+}
 .spinner {
   width: 40px;
   height: 40px;

@@ -35,26 +35,20 @@
                       <img [src]="Google_Tarefa_icon">
                       {{li.title}}
                       <ul class="list-group">
-                        <li class="list-group-item"  *ngFor="let materials of li.materials">
-                            <div *ngIf="materials.driveFile">
-                               <img src="{{materials.driveFile.thumbnailUrl}}" width="10%">
-                               {{materials.driveFile.title}}
-                               <div class="answer">
-                                 <a href="{{materials.driveFile.alternateLink}}" target="_blank">
-                                   <img [src]="Google_Classroom_icon" style="width:40px;">
-                                 </a>
-                               </div>
-                            </div>
-                            <div *ngIf="materials.youTubeVideo">
-                               <img src="{{materials.youTubeVideo.thumbnailUrl}}" width="15%">
-                               {{materials.youTubeVideo.title}}
-                               <div class="answer">
-                                 <a href="{{materials.youTubeVideo.alternateLink}}" target="_blank">
-                                   <img [src]="Google_Classroom_icon" style="width:40px;">
-                                 </a>
-                               </div>
-                            </div>
-                        </li>
+                        <ng-container *ngFor="let materials of li.materials">
+                            <li class="list-group-item" *ngIf="materials.driveFile">
+                               <img src="{{materials.driveFile.thumbnailUrl}}" width="5%">
+                               <a href="{{materials.driveFile.alternateLink}}" target="_blank">
+                                 {{materials.driveFile.title}}
+                               </a>
+                            </li>
+                            <li class="list-group-item" *ngIf="materials.youTubeVideo">
+                               <img src="{{materials.youTubeVideo.thumbnailUrl}}" width="5%">
+                               <a href="{{materials.youTubeVideo.alternateLink}}" target="_blank">
+                                 {{materials.youTubeVideo.title}}
+                               </a>
+                            </li>
+                      </ng-container>
                       </ul>
                   </li>
               </ul>

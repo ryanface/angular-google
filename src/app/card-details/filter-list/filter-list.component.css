@@ -1,5 +1,9 @@
+.row{
+ margin-right: 0px !important;
+ margin-left: 0px !important;
+}
 .answer{
-   margin-top: 55px;
+   /*margin-top: 55px;*/
    float: right;
 }
 .spacer{

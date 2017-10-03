@@ -20,29 +20,28 @@
                                 <ng-container *ngFor="let materials of li.materials">
                                    <li class="list-group-item" *ngIf="materials.driveFile">
                                        <a href="{{materials.driveFile.driveFile.alternateLink}}" target="_blank">
-                                            <img src="{{materials.driveFile.driveFile.thumbnailUrl}}" width="10%">
+                                            <img src="{{materials.driveFile.driveFile.thumbnailUrl}}" width="5%">
                                             {{materials.driveFile.driveFile.title | slice:0:60}}
                                        </a>
                                    </li>
                                    <li class="list-group-item" *ngIf="materials.youtubeVideo">
                                        <a href="{{materials.youtubeVideo.alternateLink}}" target="_blank">
-                                            <img src="{{materials.youtubeVideo.thumbnailUrl}}" width="15%">
+                                            <img src="{{materials.youtubeVideo.thumbnailUrl}}" width="5%">
                                             {{materials.youtubeVideo.title | slice:0:60}}
                                        </a>
                                    </li>
                                    <li class="list-group-item" *ngIf="materials.link">
                                        <a href="{{materials.link.url}}" target="_blank">
-                                            <img src="{{materials.link.thumbnailUrl}}" width="15%">
+                                            <img src="{{materials.link.thumbnailUrl}}" width="5%">
                                             {{materials.link.title | slice:0:60}}
                                        </a>
                                    </li>
                                 </ng-container>
                               </ng-container>
-                               <div class="answer">
-                                 <a *ngIf="li.text" href="{{li.alternateLink}}" target="_blank">
-                                    <img [src]="Google_Classroom_icon" width="80%">
-                                  </a>
-                              </div>
+                               <a *ngIf="li.text" href="{{li.alternateLink}}" class="answer" target="_blank">
+                                  <img [src]="Google_Classroom_icon" width="80%">
+                               </a>
+                              <small class="shortname">{{li.updateTime | slice:0:10}} {{li.updateTime | slice:11:19}}</small>
                               <div class="spacer"></div>
                            </ul>
                       </li>
