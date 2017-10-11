@@ -72,9 +72,10 @@ export class CardsComponent implements OnInit {
   }
   public choice(url:string,list:any){
        console.log('choice list:',list);
-       this.gd.nav.currentData = list;
-       this.gd.nav.currentClick = url;
-       this.gd.proccess();
+       this.gd.choice(url,list);
+       //this.gd.nav.currentData = list;
+       //this.gd.nav.currentClick = url;
+       //this.gd.proccess();
   }
   pesquisar(){
 

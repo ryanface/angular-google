@@ -13,7 +13,6 @@ export class CardDetailsComponent implements OnInit {
 
     /*observer*/
     private subscription: Subscription;
-    //private Announcement: Subscription;
 
     public id: number;
     private sub: any;
@@ -28,16 +27,13 @@ export class CardDetailsComponent implements OnInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => { this.id = +params['id']; this.go(); });
     this.subscription = this.AppService.getService().subscribe((lista: Response) => { this.proccess(lista);  },(error) => console.log(error), );
-    //this.Announcement = this.AppService.getAnnouncement().subscribe((lista: Response) => { console.log(lista); this.Announcement.unsubscribe();  },(error) => { console.log(error); } );
   }
   ngOnDestroy() {
      if(this.sub)this.sub.unsubscribe();
      this.AppService.clearService();
-     //if(this.Announcement)this.Announcement.unsubscribe();
    }
    go():void{
      this.AppService.getCardDetail(this.id);
-     //this.AppService.goAnnouncement(this.id);
    }
    //AUTENTICACAO __  LOAD COURSES
    proccess(tmp:Response){

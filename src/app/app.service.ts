@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import { ListCourseWork } from './listCourseWork.type';
 import { List } from './list.type';
+import { GlobalDataService } from './globaldata.service';
 
 @Injectable()
 export class AppService implements OnInit {
@@ -24,9 +25,11 @@ export class AppService implements OnInit {
     _LOGIN:boolean = false;
     public params:any;
     public method:string;
+    public reload:any;
 
     constructor(private http: Http,
-                private route: Router) {
+                private route: Router,
+                private gd:GlobalDataService) {
         gapi.route = route;
     }
 
@@ -40,6 +43,7 @@ export class AppService implements OnInit {
             courseId: courseId
           }).then(response=> {    gapi.locallib.sendService( response.result );  });
       }catch(e){
+          this.reload = {'id':courseId,'card':'activity-details'};
           this.checkLogin();
       }
     }
@@ -51,6 +55,7 @@ export class AppService implements OnInit {
         }).then(response=> {    gapi.locallib.sendService( response.result );  },
                 (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
       }catch(e){
+         this.reload = {'id':courseId,'card':'card-details'};
          this.checkLogin();
       }
     }
@@ -87,6 +92,7 @@ export class AppService implements OnInit {
             }).then(response=> { console.log('return:goEnrols=>');  this.sendEnrols( response.result.students );  },
                     (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
         }catch(e){
+            this.reload = {'id':courseId,'card':'card-students'};
             setTimeout(()=>gapi.route.navigate(['/login']),50);
         }
     }
@@ -133,6 +139,7 @@ export class AppService implements OnInit {
         }).then(response=> { console.log('return:goAnnouncement=>');  this.sendAnnouncement( response.result.announcements );  },
                 (error)=> { console.log(error); setTimeout(()=>gapi.route.navigate(['/login']),50); });
       }catch(e){
+        this.reload = {'id':courseId,'card':'card-announcement'};
         setTimeout(()=>gapi.route.navigate(['/login']),50);
       }
     }
@@ -174,7 +181,13 @@ export class AppService implements OnInit {
     loginStatus(isSignedIn):void{
         console.log('loginStatus',isSignedIn);
         if(isSignedIn){
-          setTimeout(()=>gapi.route.navigate(['/turmas']),50);
+         if(!gapi.locallib.reload){
+           setTimeout(()=>gapi.route.navigate(['/turmas']),50);
+         }else{
+           console.log('reload',gapi.locallib.reload);
+           gapi.locallib.gd.choice(gapi.locallib.reload['card'],{'id':gapi.locallib.reload['id'],'descriptionHeading':'reload'});
+           setTimeout(()=>gapi.route.navigate(['/'+gapi.locallib.reload['card'], gapi.locallib.reload['id']]),50);
+         }
         }else{
           if(gapi.locallib)
             gapi.locallib.sendService( {api:'login_error'} );
@@ -185,8 +198,9 @@ export class AppService implements OnInit {
         console.log('loginEnd',isSignedIn);
         if(!isSignedIn){
           setTimeout(()=>gapi.route.navigate(['/login']),50);
-        }else
+        }else{
           setTimeout(()=>gapi.route.navigate(['/turmas']),50);
+        }
     }
     logout(){
         gapi.auth2.getAuthInstance().signOut();
