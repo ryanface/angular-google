@@ -216,11 +216,4 @@ export class AppService implements OnInit {
     getService(): Observable<Response> {
         return this.subject.asObservable();
     }
-    /*******************************API/LOG***********************************/
-    json(mail:string): Observable<Response> {
-      let params:any = [];
-      params['params'] = JSON.stringify({"token":"00948692FF46EDA322EC808B855A7F92234567","restformat":"json","method":"get_log_google","params_method":mail});
-      const url = 'http://integrador.franciscanos.net/Api';
-      return this.http.get(url,{params:params});
-    }
 }
